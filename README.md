@@ -216,6 +216,42 @@ Full honest comparison: [COMPARISON.md](COMPARISON.md)
 
 ---
 
+## 🤖 How the agents use it
+
+This library is integrated at TWO architectural layers across the ecosystem:
+
+### Layer 1 — AI Law Firm specialist agents (7 country firms + 1 startup firm)
+
+Each AI Law Firm's brain-classifier routes user requests to specialist agents (Matter Manager · Citation Clerk · Court Registrar · Drafting Assistant · Compliance Officer · Calendar Sync · etc.). Before ANY specialist agent calls a cloud LLM, the firm's pseudonymisation module calls `gw.sanitize()` on the prompt. The cloud LLM sees only `[PERSON_1]`, `[EMIRATES_ID_1]`, `[NI_NUMBER_1]` placeholders. The response is then run through `gw.desanitize()` before being shown to the user.
+
+### Layer 2 — Drafting plugin Reader → Overseer pipeline (14 Indian-litigation drafting plugins)
+
+The Wolfgang Rush drafting plugins each implement a **6-agent pipeline**:
+
+```
+Reader → Format → Drafter → Verifier → Refiner → Overseer
+```
+
+The **Reader agent** is the first agent — it reads the user's case folder (matter notes, party details, statements). This is where real PII enters the pipeline. Before the Reader hands sanitized facts to Format/Drafter/Verifier/Refiner for cloud-LLM-assisted drafting, it calls:
+
+```python
+clean_facts, token_map = gw.sanitize(case_folder_text)
+```
+
+All four middle agents (Format · Drafter · Verifier · Refiner) operate exclusively on placeholder-bearing sanitized text. The cloud LLM vendor never sees the client's real name, Aadhaar, NI Number, Emirates ID, NRIC, or any other government identifier across the entire drafting cycle.
+
+The **Overseer agent** is the final agent. Before writing the completed pleading to disk, it calls:
+
+```python
+final_draft = gw.desanitize(refined_draft, token_map)
+```
+
+Real client names and IDs reappear ONLY in the final filed pleading on the practitioner's local machine. No intermediate version with both real PII AND LLM output exists anywhere.
+
+This architecture means: even if a cloud LLM vendor's logs are subpoenaed or a vendor's training pipeline retains prompts, the practitioner's client PII was never in those payloads. The session-scoped `TokenMap` lived in Python memory for ~30 seconds during one drafting run, then was garbage-collected.
+
+---
+
 ## 📚 Used by
 
 This library is the privacy primitive across **22 production repos** under the Wolfgang Rush publishing brand:
