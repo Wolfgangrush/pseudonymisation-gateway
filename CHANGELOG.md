@@ -4,7 +4,7 @@
 
 ### Initial release
 
-First publication of `pseudonymisation-gateway` — extracted from production use across 7 country AI Law Firms + 1 AI Startup Firm + 14 Indian-litigation drafting plugins (22 repos under the Wolfgang Rush publishing brand).
+First publication of `pseudonymisation-gateway` — the privacy primitive built to firewall client PII from cloud LLMs, shipped as the integration layer across 7 country AI Law Firms + 1 AI Startup Firm + 14 Indian-litigation drafting plugins (22 repos under the Wolfgang Rush publishing brand).
 
 **Engine:**
 - `PseudonymisationGateway` — session-scoped, in-memory, deterministic placeholder mapping
@@ -28,7 +28,7 @@ First publication of `pseudonymisation-gateway` — extracted from production us
 - `JURISDICTIONS.md` — per-country pattern catalog + extension guide
 - `COMPARISON.md` — honest comparison with Microsoft Presidio, cloud DLP APIs, differential privacy approaches
 
-**Used in production by:**
+**Shipped as the privacy primitive in:**
 - 7 country AI Law Firms (Wolfgangrush/ai-law-firm-india · -uk · -uae · -australia · -singapore · -usa · -eu)
 - 1 AI Startup Firm (Wolfgangrush/ai-startup-firm-india)
 - 14 Indian-litigation drafting plugins (Wolfgangrush/supreme-court-drafting · -indian-hc-drafting · -district-court-drafting · -indian-{family,contracts,banking,labour,property,company,tax,consumer,mact,ip,rent-control}-drafting)

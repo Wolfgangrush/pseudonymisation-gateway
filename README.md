@@ -10,9 +10,9 @@
 
 ## ⚠️ Why this exists
 
-When I built 7 country **AI Law Firms** (India · UAE · UK · USA · EU · Singapore · Australia) + 14 Indian-litigation drafting plugins on top of cloud LLMs (Claude · GPT-4 · Gemini), every single one had the same architectural gap:
+I built 7 country **AI Law Firms** (India · UAE · UK · USA · EU · Singapore · Australia) + 14 Indian-litigation drafting plugins on top of cloud LLMs (Claude · GPT-4 · Gemini), all designed for solicitor workflows on real matters. Every one of them faces the same architectural problem at the point of real use:
 
-**Client PII was going to the cloud in cleartext.**
+**The moment a solicitor points these tools at a real matter, client PII goes to the cloud LLM in cleartext.**
 
 A solicitor asks the LLM to draft a witness statement. The prompt contains the client's real name, NRIC, NI Number, Emirates ID, Aadhaar, case file numbers. The cloud vendor gets all of it. Stored in their training pipeline. Logged. Subpoena-able.
 
@@ -21,7 +21,7 @@ Existing solutions:
 - **AWS/Google/Azure DLP APIs** — paid, cloud-dependent (the very thing we're trying to avoid), and the same Western-jurisdiction blind spots.
 - **Roll your own regex** — every legal-tech project re-solving the same problem badly.
 
-So I built this. Extracted from production use across **22 Wolfgang Rush legal-tech repos**.
+So I built this as the privacy primitive that closes the gap. It ships as the integration layer across **22 Wolfgang Rush legal-tech repos** — so anyone using those tools on a real matter is firewalled by default.
 
 ---
 
@@ -254,7 +254,7 @@ This architecture means: even if a cloud LLM vendor's logs are subpoenaed or a v
 
 ## 📚 Used by
 
-This library is the privacy primitive across **22 production repos** under the Wolfgang Rush publishing brand:
+This library is the privacy primitive shipped across **22 repos** under the Wolfgang Rush publishing brand:
 
 ### 7 country AI Law Firms
 - [ai-law-firm-india](https://github.com/Wolfgangrush/ai-law-firm-india)
