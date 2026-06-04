@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.1.1] — 2026-06-05 · Dual-mode disclosure refinement
+
+### Changed
+- **README.md** — clarified the dual-mode privacy posture for the Wolfgang Rush AI Law Firm family:
+  - "Why this exists" section now opens with the explicit local-default / cloud-optional dual-mode framing, naming the Gateway as the bridge architecture that activates in cloud mode (not always).
+  - "How the agents use it" sections now carry the **CLOUD MODE** qualifier so readers do not infer the Gateway is in the call path when an AI Law Firm is configured for Local Ollama.
+  - New "Dual-mode privacy posture — at a glance" section before "Used by" — three-row table mapping each configuration (Local Ollama default · DeepSeek opt-in · Claude/Gemini opt-in) to whether the Gateway is invoked, what it does, and whom each tier is for. Also names what the Gateway does NOT discharge (vendor DPA · Article 28 · BAA · Schrems II supplementary safeguards · APP 8 risk assessments · state-bar opinions · jurisdiction-specific offshore-prohibition categories).
+
+### Why this matters
+The prior README was technically accurate but did not clearly distinguish that the Gateway only activates in cloud mode. A reader skim could infer the library is the always-on privacy layer for the AI Law Firms, when in fact local-Ollama-tier users have no need for it because no transmission occurs. This refinement makes the dual-mode story explicit and prevents readers from conflating Gateway protection with the absence-of-transmission protection that the local-default tier provides.
+
+### Unchanged
+- Engine, jurisdiction modules, pattern catalogs, threat model, and test suite are unchanged. This is a documentation refinement, not a behavioural change.
+
 ## [0.1.0] — 2026-05-20
 
 ### Initial release

@@ -10,9 +10,14 @@
 
 ## ⚠️ Why this exists
 
-I built 7 country **AI Law Firms** (India · UAE · UK · USA · EU · Singapore · Australia) + 14 Indian-litigation drafting plugins on top of cloud LLMs (Claude · GPT-4 · Gemini), all designed for solicitor workflows on real matters. Every one of them faces the same architectural problem at the point of real use:
+The Wolfgang Rush **AI Law Firm** family (7 country firms · India · UAE · UK · USA · EU · Singapore · Australia) + 14 Indian-litigation drafting plugins are designed as **dual-mode** legal-tech tools:
 
-**The moment a solicitor points these tools at a real matter, client PII goes to the cloud LLM in cleartext.**
+- **🥇 Local-first by default** — the `connect-local` command in each AI Law Firm configures Ollama + Qwen3 to run the language model on the user's laptop. In this configuration, no prompt ever leaves the machine; the Gateway is not invoked because there is no cross-vendor transmission to firewall.
+- **🥈 / 🥉 Cloud-LLM optional** — for users who choose to opt into Claude / Gemini / DeepSeek for quality reasons, the AI Law Firm wires this library in front of every outbound prompt. The Gateway is the bridge architecture that makes cloud-mode defensible for client-confidential work.
+
+The architectural problem this library solves shows up the moment a solicitor opts into cloud mode:
+
+**Without a pseudonymisation layer, the moment a solicitor points a cloud-AI legal tool at a real matter, client PII goes to the cloud LLM in cleartext.**
 
 A solicitor asks the LLM to draft a witness statement. The prompt contains the client's real name, NRIC, NI Number, Emirates ID, Aadhaar, case file numbers. The cloud vendor gets all of it. Stored in their training pipeline. Logged. Subpoena-able.
 
@@ -21,7 +26,9 @@ Existing solutions:
 - **AWS/Google/Azure DLP APIs** — paid, cloud-dependent (the very thing we're trying to avoid), and the same Western-jurisdiction blind spots.
 - **Roll your own regex** — every legal-tech project re-solving the same problem badly.
 
-So I built this as the privacy primitive that closes the gap. It ships as the integration layer across **22 Wolfgang Rush legal-tech repos** — so anyone using those tools on a real matter is firewalled by default.
+So I built this as the privacy primitive that closes the gap when cloud mode is invoked. It ships as the integration layer across **22 Wolfgang Rush legal-tech repos** — so anyone opting into cloud mode on any of those tools is firewalled by Gateway sanitisation before any prompt leaves their machine.
+
+**The boundary this library does NOT cross:** the Gateway sanitisation does not transform a cloud-LLM tool into an "architecturally local" tool. The data still leaves the machine — what crosses the border is structurally pseudonymised, which is materially stronger than raw transmission but is not equivalent to zero transmission. Users with sensitivity ceilings that require zero cross-border data flow (e.g. Section 77 Australian My Health Records data; UAE PDPL Article 22 restricted categories; certain UK GDPR Schedule 21 special-category data) should use the Local-Ollama tier instead.
 
 ---
 
@@ -218,13 +225,15 @@ Full honest comparison: [COMPARISON.md](COMPARISON.md)
 
 ## 🤖 How the agents use it
 
-This library is integrated at TWO architectural layers across the ecosystem:
+This library is integrated at TWO architectural layers across the ecosystem. **Both layers only activate when the user has opted into a cloud-LLM tier** — in the local-default (Ollama) configuration the Gateway is not invoked because no prompt crosses the machine boundary.
 
-### Layer 1 — AI Law Firm specialist agents (7 country firms + 1 startup firm)
+### Layer 1 — AI Law Firm specialist agents (7 country firms + 1 startup firm), CLOUD MODE
 
-Each AI Law Firm's brain-classifier routes user requests to specialist agents (Matter Manager · Citation Clerk · Court Registrar · Drafting Assistant · Compliance Officer · Calendar Sync · etc.). Before ANY specialist agent calls a cloud LLM, the firm's pseudonymisation module calls `gw.sanitize()` on the prompt. The cloud LLM sees only `[PERSON_1]`, `[EMIRATES_ID_1]`, `[NI_NUMBER_1]` placeholders. The response is then run through `gw.desanitize()` before being shown to the user.
+Each AI Law Firm's brain-classifier routes user requests to specialist agents (Matter Manager · Citation Clerk · Court Registrar · Drafting Assistant · Compliance Officer · Calendar Sync · etc.). When the user has configured a cloud-LLM provider in `~/.ailawfirm-<jurisdiction>/config.json` (e.g. `ai_provider="anthropic"`), the firm's internalised `PseudonymisationGateway` (source: `ailawfirm_<jurisdiction>/pseudonymisation.py`) is invoked before ANY specialist agent calls the cloud LLM. The cloud LLM sees only `[PERSON_1]`, `[EMIRATES_ID_1]`, `[NI_NUMBER_1]` placeholders. The response is then run through `gw.desanitize()` before being shown to the user.
 
-### Layer 2 — Drafting plugin Reader → Overseer pipeline (14 Indian-litigation drafting plugins)
+In local mode (`ai_provider="ollama"` or absent — the default), specialist agents talk directly to the on-device Ollama runtime. The Gateway is not in the call path because there is no cross-vendor transmission to firewall.
+
+### Layer 2 — Drafting plugin Reader → Overseer pipeline (14 Indian-litigation drafting plugins), CLOUD MODE
 
 The Wolfgang Rush drafting plugins each implement a **6-agent pipeline**:
 
@@ -249,6 +258,25 @@ final_draft = gw.desanitize(refined_draft, token_map)
 Real client names and IDs reappear ONLY in the final filed pleading on the practitioner's local machine. No intermediate version with both real PII AND LLM output exists anywhere.
 
 This architecture means: even if a cloud LLM vendor's logs are subpoenaed or a vendor's training pipeline retains prompts, the practitioner's client PII was never in those payloads. The session-scoped `TokenMap` lived in Python memory for ~30 seconds during one drafting run, then was garbage-collected.
+
+---
+
+## 🌗 Dual-mode privacy posture — at a glance
+
+The Wolfgang Rush AI Law Firm family ships with a clear dual-mode privacy story. This library is the cloud-mode half.
+
+| Configuration | What happens to a prompt | What the Gateway does | Whom this is for |
+|---|---|---|---|
+| 🥇 **Local mode (default)** — `ai_provider="ollama"` or unset (v0.1 keyword-matching brain · v0.2+ Ollama + Qwen3) | Stays on the user's laptop. Ollama runtime processes it. Nothing crosses the machine boundary. | Not invoked. There is no cross-vendor transmission to firewall. | Practitioners whose matter sensitivity requires zero cross-border data flow (e.g. Section 77 MHR data · UAE PDPL Article 22 restricted categories · most privileged advocate-client communications). |
+| 🥈 **DeepSeek cloud mode (opt-in)** | Sanitised via Gateway → transmitted to DeepSeek API → response de-sanitised on receipt. | Active. Strips names, government IDs, contact identifiers, case references before transmission; restores them in the response. | Practitioners doing public-law research · template-building · study work where cost matters and the user has independently accepted China-routed transmission of pseudonymised data. |
+| 🥉 **Claude / Gemini cloud mode (opt-in)** | Sanitised via Gateway → transmitted to Anthropic / Google API → response de-sanitised on receipt. | Active. Same protection. | Practitioners doing heavy daily drafting where cloud-LLM quality matters AND who have executed the vendor DPA + jurisdiction-specific safeguards (UK GDPR Schedule 21 · EU Schrems II Article 46 · US BAA where HIPAA applies · APP 8 risk assessment where Australian APP applies · etc.). |
+
+**What this library does NOT discharge:**
+- It does NOT discharge your vendor DPA / Article 28 / BAA / Schrems II supplementary safeguard / APP 8 risk-assessment / state-bar opinion obligations. Those remain yours to execute.
+- It does NOT cure jurisdiction-specific prohibitions on offshore data handling for specific categories of data — those categories require Local Ollama tier, full stop.
+- It does NOT eliminate the need to verify your matter's specific identifiers fall within the Gateway's coverage patterns.
+
+This is **privacy-by-architecture for the cloud-mode half** of the dual-mode story. The local-default half is privacy-by-absence-of-transmission and needs no library at all.
 
 ---
 
