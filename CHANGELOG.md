@@ -15,7 +15,7 @@
 ## [0.1.1] — 2026-06-05 · Dual-mode disclosure refinement
 
 ### Changed
-- **README.md** — clarified the dual-mode privacy posture for the Wolfgang Rush AI Law Firm family:
+- **README.md** — clarified the dual-mode privacy posture for the wolfgang_rush AI Law Firm family:
   - "Why this exists" section now opens with the explicit local-default / cloud-optional dual-mode framing, naming the Gateway as the bridge architecture that activates in cloud mode (not always).
   - "How the agents use it" sections now carry the **CLOUD MODE** qualifier so readers do not infer the Gateway is in the call path when an AI Law Firm is configured for Local Ollama.
   - New "Dual-mode privacy posture — at a glance" section before "Used by" — three-row table mapping each configuration (Local Ollama default · DeepSeek opt-in · Claude/Gemini opt-in) to whether the Gateway is invoked, what it does, and whom each tier is for. Also names what the Gateway does NOT discharge (vendor DPA · Article 28 · BAA · Schrems II supplementary safeguards · APP 8 risk assessments · state-bar opinions · jurisdiction-specific offshore-prohibition categories).
@@ -30,7 +30,7 @@ The prior README was technically accurate but did not clearly distinguish that t
 
 ### Initial release
 
-First publication of `pseudonymisation-gateway` — the privacy primitive built to firewall client PII from cloud LLMs, shipped as the integration layer across 7 country AI Law Firms + 1 AI Startup Firm + 14 Indian-litigation drafting plugins (22 repos under the Wolfgang Rush publishing brand).
+First publication of `pseudonymisation-gateway` — the privacy primitive built to firewall client PII from cloud LLMs, shipped as the integration layer across 7 country AI Law Firms + 1 AI Startup Firm + 14 Indian-litigation drafting plugins (22 repos under the wolfgang_rush publishing brand).
 
 **Engine:**
 - `PseudonymisationGateway` — session-scoped, in-memory, deterministic placeholder mapping

@@ -1,6 +1,6 @@
 """Example: How the 7 country AI Law Firms integrate this library.
 
-Each Wolfgang Rush AI Law Firm (github.com/Wolfgangrush/ai-law-firm-*) replaces
+Each wolfgang_rush AI Law Firm (github.com/Wolfgangrush/ai-law-firm-*) replaces
 its in-firm pseudonymisation.py with a 3-line module that delegates to this
 gateway:
 

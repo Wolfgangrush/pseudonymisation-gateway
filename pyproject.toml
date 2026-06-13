@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Jurisdiction-aware PII pseudonymisation middleware for legal-tech tools using cloud LLMs"
 readme = "README.md"
 license = {text = "MIT"}
-authors = [{name = "Rushikesh R. Mahajan (publishing as Wolfgang Rush)", email = "advrushikeshravindramahajan@gmail.com"}]
+authors = [{name = "Rushikesh R. Mahajan (publishing as wolfgang_rush)", email = "advrushikeshravindramahajan@gmail.com"}]
 keywords = ["pseudonymisation", "anonymisation", "pii", "gdpr", "dpdp", "legal-tech", "privacy", "ai", "llm", "law"]
 classifiers = [
     "Development Status :: 4 - Beta",

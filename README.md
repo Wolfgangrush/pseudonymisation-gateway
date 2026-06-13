@@ -10,7 +10,7 @@
 
 ## ⚠️ Why this exists
 
-The Wolfgang Rush **AI Law Firm** family (7 country firms · India · UAE · UK · USA · EU · Singapore · Australia) + 14 Indian-litigation drafting plugins are designed as **dual-mode** legal-tech tools:
+The wolfgang_rush **AI Law Firm** family (7 country firms · India · UAE · UK · USA · EU · Singapore · Australia) + 14 Indian-litigation drafting plugins are designed as **dual-mode** legal-tech tools:
 
 - **🥇 Local-first by default** — the `connect-local` command in each AI Law Firm configures Ollama + Qwen3 to run the language model on the user's laptop. In this configuration, no prompt ever leaves the machine; the Gateway is not invoked because there is no cross-vendor transmission to firewall.
 - **🥈 / 🥉 Cloud-LLM optional** — for users who choose to opt into Claude / Gemini / DeepSeek for quality reasons, the AI Law Firm wires this library in front of every outbound prompt. The Gateway is the bridge architecture that makes cloud-mode defensible for client-confidential work.
@@ -26,7 +26,7 @@ Existing solutions:
 - **AWS/Google/Azure DLP APIs** — paid, cloud-dependent (the very thing we're trying to avoid), and the same Western-jurisdiction blind spots.
 - **Roll your own regex** — every legal-tech project re-solving the same problem badly.
 
-So I built this as the privacy primitive that closes the gap when cloud mode is invoked. It ships as the integration layer across **22 Wolfgang Rush legal-tech repos** — so anyone opting into cloud mode on any of those tools is firewalled by Gateway sanitisation before any prompt leaves their machine.
+So I built this as the privacy primitive that closes the gap when cloud mode is invoked. It ships as the integration layer across **22 wolfgang_rush legal-tech repos** — so anyone opting into cloud mode on any of those tools is firewalled by Gateway sanitisation before any prompt leaves their machine.
 
 **The boundary this library does NOT cross:** the Gateway sanitisation does not transform a cloud-LLM tool into an "architecturally local" tool. The data still leaves the machine — what crosses the border is structurally pseudonymised, which is materially stronger than raw transmission but is not equivalent to zero transmission. Users with sensitivity ceilings that require zero cross-border data flow (e.g. Section 77 Australian My Health Records data; UAE PDPL Article 22 restricted categories; certain UK GDPR Schedule 21 special-category data) should use the Local-Ollama tier instead.
 
@@ -235,7 +235,7 @@ In local mode (`ai_provider="ollama"` or absent — the default), specialist age
 
 ### Layer 2 — Drafting plugin Reader → Overseer pipeline (14 Indian-litigation drafting plugins), CLOUD MODE
 
-The Wolfgang Rush drafting plugins each implement a **6-agent pipeline**:
+The wolfgang_rush drafting plugins each implement a **6-agent pipeline**:
 
 ```
 Reader → Format → Drafter → Verifier → Refiner → Overseer
@@ -263,7 +263,7 @@ This architecture means: even if a cloud LLM vendor's logs are subpoenaed or a v
 
 ## 🌗 Dual-mode privacy posture — at a glance
 
-The Wolfgang Rush AI Law Firm family ships with a clear dual-mode privacy story. This library is the cloud-mode half.
+The wolfgang_rush AI Law Firm family ships with a clear dual-mode privacy story. This library is the cloud-mode half.
 
 | Configuration | What happens to a prompt | What the Gateway does | Whom this is for |
 |---|---|---|---|
@@ -282,7 +282,7 @@ This is **privacy-by-architecture for the cloud-mode half** of the dual-mode sto
 
 ## 📚 Used by
 
-This library is the privacy primitive shipped across **22 repos** under the Wolfgang Rush publishing brand:
+This library is the privacy primitive shipped across **22 repos** under the wolfgang_rush publishing brand:
 
 ### 7 country AI Law Firms
 - [ai-law-firm-india](https://github.com/Wolfgangrush/ai-law-firm-india)
@@ -371,16 +371,16 @@ Open an issue first for discussion, then PR.
 
 MIT — see [LICENSE](LICENSE).
 
-Copyright (c) 2026 Rushikesh R. Mahajan (publishing as Wolfgang Rush).
+Copyright (c) 2026 Rushikesh R. Mahajan (publishing as wolfgang_rush).
 
 ---
 
 ## 👤 Author
 
 **Rushikesh R. Mahajan**
-Advocate · Bombay High Court (Nagpur Bench) · Bar Council of Maharashtra & Goa
+Advocate · High Courts of India · Bar Council of Maharashtra & Goa
 LLM (Law and Technology) · Queen's University Belfast (2024)
-Publishing as **Wolfgang Rush**
+Publishing as **wolfgang_rush**
 
 GitHub: [github.com/Wolfgangrush](https://github.com/Wolfgangrush)
 LinkedIn: [linkedin.com/in/rushikesh-ravindra-mahajan](https://www.linkedin.com/in/rushikesh-ravindra-mahajan/)
