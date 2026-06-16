@@ -175,7 +175,7 @@ PseudonymisationGateway.sanitize()
    └─→ Returns (clean_text, token_map)
        │
        ▼
-Cloud LLM API call (sees placeholders; any unmatched residue is surfaced + audit-logged before send · v0.3)
+Cloud LLM API call (sees only the [TYPE_N] placeholders for matched patterns, never the real identifiers)
        │
        ▼
 LLM response (placeholders preserved across the round-trip)
@@ -247,7 +247,7 @@ The **Reader agent** is the first agent — it reads the user's case folder (mat
 clean_facts, token_map = gw.sanitize(case_folder_text)
 ```
 
-All four middle agents (Format · Drafter · Verifier · Refiner) operate on placeholder-bearing sanitized text. Regex-matched identifiers (client's real name, Aadhaar, NI Number, Emirates ID, NRIC, and other government identifiers) are replaced before send; any residue the scanner can't fully resolve is surfaced to the user and audit-logged across the drafting cycle (v0.3 honest-disclosure — the architecture materially strengthens privacy by eliminating the most common attack surface; remaining edge cases are surfaced to the user, not silently passed).
+All four middle agents (Format · Drafter · Verifier · Refiner) operate on placeholder-bearing sanitized text. Regex-matched identifiers (Aadhaar, NI Number, Emirates ID, NRIC, and other structured government identifiers — plus a person's name where it carries a recognisable honorific) are replaced before send. **Limitation (v0.1):** detection is pattern-based, so an identifier with no recognisable structure — most importantly a name written without an honorific — can pass through unmatched. Automatic residue-surfacing and audit-logging are on the roadmap (see CHANGELOG), not yet shipped; until then the practitioner is responsible for reviewing the sanitised text before send.
 
 The **Overseer agent** is the final agent. Before writing the completed pleading to disk, it calls:
 

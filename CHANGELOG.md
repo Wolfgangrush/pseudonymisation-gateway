@@ -1,16 +1,13 @@
 # Changelog
 
-## [0.3.0-honest-disclosure] — 2026-06-06
+## [Unreleased] — Roadmap (planned, NOT yet shipped)
 
-### Documentation
-- Refined README architecture diagram (sanitize/desanitize flow) and the "How the agents use it" section to surface v0.3 honest-disclosure: the regex + NER + parties.json layered scanner achieves high recall, but is not 100%. Any residue the scanner can't fully resolve is surfaced to the user and audit-logged before send. Architecture materially strengthens privacy by eliminating the most common attack surface; remaining edge cases are surfaced to the user, not silently passed.
-- Locked under doctrine: refinement-not-retraction for architecture-honest overclaim + adoption-first in no-statutory-AI-law jurisdictions (no hard-block UX; tiered-confidence dialog on high-confidence residue with Proceed-anyway available; silent audit log on low-confidence residue; the practitioner retains the final call).
+> The items below are **design goals, not current behaviour.** The shipped library (v0.1.x) is a pure-regex, pattern-matching sanitiser with **no NER, no per-matter dictionary, no residue-surfacing, and no audit log.** Do not rely on any capability in this section until it lands in a tagged release.
 
-### v0.3-alpha implementation scope (engineering — separate from this doc-only commit)
-- Layered sanitiser (regex + Indian-NER-tuned + parties.json per-matter dictionary)
-- Tiered residue scan (high-confidence residue → soft dialog; low-confidence → silent audit log)
-- Per-call audit log (counts only, never values; matter ID + entity count + types + residue-scan result + model + timestamp)
-- Ship target window 2026-06-08 → 2026-06-11. 2-week live testing → lock as v0.3 if zero leaks.
+### Planned
+- **Layered sanitiser** — regex + an Indian-tuned NER pass + an optional per-matter `parties.json` dictionary, to catch identifiers (especially names written without an honorific) that pure regex misses today.
+- **Tiered residue scan** — high-confidence residue → soft confirm dialog; low-confidence → audit-logged; the practitioner retains the final call.
+- **Per-call audit log** — counts only, never values (matter ID + entity count + types + residue-scan result + model + timestamp).
 
 ## [0.1.1] — 2026-06-05 · Dual-mode disclosure refinement
 
