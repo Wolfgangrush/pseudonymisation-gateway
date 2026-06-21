@@ -54,7 +54,7 @@ real = gw.desanitize(response.content[0].text, token_map)
 
 ---
 
-## 🌐 Jurisdiction coverage (v0.1.0)
+## 🌐 Jurisdiction coverage (v0.3.0)
 
 | Country | Patterns covered |
 |---|---|
@@ -247,7 +247,7 @@ The **Reader agent** is the first agent — it reads the user's case folder (mat
 clean_facts, token_map = gw.sanitize(case_folder_text)
 ```
 
-All four middle agents (Format · Drafter · Verifier · Refiner) operate on placeholder-bearing sanitized text. Regex-matched identifiers (Aadhaar, NI Number, Emirates ID, NRIC, and other structured government identifiers — plus a person's name where it carries a recognisable honorific) are replaced before send. **Limitation (v0.1):** detection is pattern-based, so an identifier with no recognisable structure — most importantly a name written without an honorific — can pass through unmatched. Automatic residue-surfacing and audit-logging are on the roadmap (see CHANGELOG), not yet shipped; until then the practitioner is responsible for reviewing the sanitised text before send.
+All four middle agents (Format · Drafter · Verifier · Refiner) operate on placeholder-bearing sanitized text. Regex-matched identifiers (Aadhaar, NI Number, Emirates ID, NRIC, and other structured government identifiers — plus a person's name where it carries a recognisable honorific) are replaced before send. **v0.3** adds three layers on top: a per-matter `parties.json` dictionary that catches known party names even when written without an honorific; a tiered residue scan that surfaces likely-missed PII to the practitioner before send (it surfaces, it never auto-blocks — the practitioner retains the final call); and a counts-only audit log (entity counts and types only — never values). **Limitation:** the dictionary only catches names the practitioner has listed in `parties.json`, the optional NER pass is off by default, and the residue scan is a prompt to review, not a guarantee. This library is **assistive infrastructure for qualified legal practitioners — not a substitute for professional judgment**, and the practitioner remains responsible for reviewing the sanitised text before send.
 
 The **Overseer agent** is the final agent. Before writing the completed pleading to disk, it calls:
 

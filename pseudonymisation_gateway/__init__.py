@@ -3,6 +3,9 @@
 Strips PII from user text before any cloud-API call; restores PII in the response.
 Session-scoped, in-memory only, token map NEVER persisted to disk.
 
+v0.3 adds layered sanitisation (per-matter parties.json dictionary + optional NER),
+tiered residue scan, and a per-call audit log (counts only, never values).
+
 Quick start:
 
     from pseudonymisation_gateway import PseudonymisationGateway
@@ -18,7 +21,7 @@ Quick start:
 See https://github.com/Wolfgangrush/pseudonymisation-gateway for documentation.
 """
 
-from .core import PseudonymisationGateway, TokenMap
+from .core import PseudonymisationGateway, TokenMap, ResidueReport
 
-__version__ = "0.1.0"
-__all__ = ["PseudonymisationGateway", "TokenMap", "__version__"]
+__version__ = "0.3.0"
+__all__ = ["PseudonymisationGateway", "TokenMap", "ResidueReport", "__version__"]

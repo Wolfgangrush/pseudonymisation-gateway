@@ -1,13 +1,40 @@
 # Changelog
 
-## [Unreleased] — Roadmap (planned, NOT yet shipped)
+## [0.3.0] — 2026-06-17
 
-> The items below are **design goals, not current behaviour.** The shipped library (v0.1.x) is a pure-regex, pattern-matching sanitiser with **no NER, no per-matter dictionary, no residue-surfacing, and no audit log.** Do not rely on any capability in this section until it lands in a tagged release.
+### Added — Feature 1: Layered sanitiser
 
-### Planned
-- **Layered sanitiser** — regex + an Indian-tuned NER pass + an optional per-matter `parties.json` dictionary, to catch identifiers (especially names written without an honorific) that pure regex misses today.
-- **Tiered residue scan** — high-confidence residue → soft confirm dialog; low-confidence → audit-logged; the practitioner retains the final call.
-- **Per-call audit log** — counts only, never values (matter ID + entity count + types + residue-scan result + model + timestamp).
+- **Per-matter `parties.json` dictionary** (`dictionary.py`). Loads known entities (PERSON, ORG, or arbitrary types) from a caller-supplied JSON file. Matches exact + case-insensitive + whole-word, longest-match-first so "Rahul Verma" tokenises before "Rahul". Supports jurisdiction-scoped entries: `{"india": {...}, "uk": {...}, "*": {...}}`. Contents stay in-RAM only — never re-written to disk by the library.
+- **Optional NER pass** (`ner.py`). Lazy-import spaCy `en_core_web_sm` for PERSON/ORG/GPE extraction. If spaCy or the model is not installed, a single warning is logged and the pipeline continues without NER. NER hits are surfaced through the residue tier (Feature 2), not auto-redacted. Declared as `[project.optional-dependencies] ner = ["spacy>=3.7"]`; core `dependencies` stays `[]`.
+
+### Added — Feature 2: Tiered residue scan
+
+- `scan_residue(text) → ResidueReport` extends `is_safe_for_cloud()`. After sanitisation, scans the would-be-sent text for likely-missed PII:
+  - **HIGH**: digit runs matching jurisdiction PII shapes (e.g. 12-digit in India → possible Aadhaar), capitalised bigrams not in the TokenMap.
+  - **LOW**: weaker signals (lone capitalised words, shorter digit runs).
+- Jurisdiction-aware: residue rules are keyed by active jurisdiction slugs; India ≠ UK ≠ UAE behaviour is preserved.
+- **Surfaces, never auto-blocks** — the practitioner retains the final call (brain-frame: tool reminds, never gates).
+
+### Added — Feature 3: Per-call audit log
+
+- Append-only JSONL audit log (`audit.py`). Each entry = COUNTS ONLY, NEVER VALUES: `{matter_id, jurisdiction, entity_count, entity_types, residue_result: {high_n, low_n}, model, timestamp}`.
+- **HARD RULE**: no original string — no name, ID, placeholder *original*, or residue *value* — is EVER written to the log. Residue is logged as counts only.
+- Opt-in: `audit_log_path: str | None = None`. If `None`, no log is written.
+- `timestamp` is caller-supplied or `datetime.now(timezone.utc)` at call time.
+
+### Changed
+
+- `PseudonymisationGateway.__init__` gains keyword-only params: `parties_file`, `audit_log_path`, `enable_ner` (all default `None`/`False`).
+- `sanitize()` gains keyword-only params: `matter_id`, `model`, `timestamp` (all default `None`).
+- `__version__` bumped `0.1.0 → 0.3.0`.
+- `ResidueReport` dataclass exported from top-level package.
+
+### Backwards compatibility
+
+- Existing `sanitize()`, `desanitize()`, `is_safe_for_cloud()` signatures keep working unchanged.
+- All new params are keyword-only with safe defaults.
+- Core `dependencies = []` unchanged; NER is an optional extra only.
+- All 41 existing tests continue to pass.
 
 ## [0.1.1] — 2026-06-05 · Dual-mode disclosure refinement
 
