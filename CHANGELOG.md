@@ -1,5 +1,47 @@
 # Changelog
 
+## [0.4.0] — 2026-06-26 · India detector precision
+
+Fixes five reported deficiencies in the India PII detectors. Detection of valid
+identifiers is now checksum/structure-verified, which removes a large class of
+false positives without weakening the privacy guarantee — anything skipped by the
+(now stricter) detector is still surfaced by the residue scanner for human review.
+
+### Added — validator hook in the engine
+
+- A PATTERNS entry may now be `(pattern, entity_type, validator)` where `validator`
+  is a callable `str -> bool`. A regex match is tokenised only when the validator
+  accepts it. Two-element entries (no validator) behave exactly as before, so all
+  other jurisdictions are unaffected. `register_pattern()` gains an optional
+  `validator` argument.
+
+### Fixed — India patterns
+
+- **Aadhaar** no longer over-matches *any* 12-digit run. Now requires a first digit
+  in 2-9 and a valid **Verhoeff** check digit, so invoice numbers, timestamps,
+  barcodes and UPI reference numbers stop being falsely redacted.
+- **PAN** now constrains the 4th letter to the holder-type set
+  (`A B C F G H J L P T`) instead of accepting any five letters.
+- **GSTIN** now validates the state code and the **base-36 check digit**, rejecting
+  GSTIN-shaped strings with a wrong checksum.
+- **Vehicle registration** now covers the **Bharat (BH) series** (`YY BH NNNN XX`),
+  which the state-series pattern could never match.
+- **₹ amounts** now capture negative and accounting forms: `-₹5,000`, `₹-5,000`,
+  `(₹5,000)`, `Rs. -5,000`.
+
+### Changed
+
+- `__version__` bumped `0.3.0 → 0.4.0`.
+- India test fixtures updated from PII-shaped-but-invalid strings to
+  checksum-valid samples; added `tests/test_india_validation.py` pinning each fix.
+
+### Backwards compatibility
+
+- Public API (`sanitize`, `desanitize`, `is_safe_for_cloud`, `scan_residue`,
+  `register_pattern`) is unchanged for existing callers.
+- The residue scanner still flags every 12-digit run in India context (recall is
+  unchanged); only the auto-redaction detector became stricter.
+
 ## [0.3.0] — 2026-06-17
 
 ### Added — Feature 1: Layered sanitiser

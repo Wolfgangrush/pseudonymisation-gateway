@@ -40,10 +40,10 @@ def test_gateway_enable_ner_no_spacy_sanitize_still_works():
         jurisdictions=["india"],
         enable_ner=True,
     )
-    clean, tm = gw.sanitize("Mr. Rahul Sharma (Aadhaar 1234 5678 9012) filed.")
+    clean, tm = gw.sanitize("Mr. Rahul Sharma (Aadhaar 9999 9999 0019) filed.")
     assert "[PERSON_" in clean
     assert "[AADHAAR_" in clean
-    assert "1234 5678 9012" not in clean
+    assert "9999 9999 0019" not in clean
 
 
 # ── Pipeline runs WITHOUT spaCy (release-gate test) ────────────────────────
@@ -55,15 +55,15 @@ def test_full_pipeline_without_spacy():
         enable_ner=True,  # NER is enabled but spaCy is absent
     )
     original = (
-        "Mr. Rahul Sharma (Aadhaar 1234 5678 9012, PAN ABCDE1234F) and "
+        "Mr. Rahul Sharma (Aadhaar 9999 9999 0019, PAN ABFPK1234L) and "
         "Mr. Khalid Al-Mansoori (Emirates ID 784-1985-1234567-8) signed."
     )
     clean, tm = gw.sanitize(original)
     response = clean + " The agreement is valid."
     restored = gw.desanitize(response, tm)
     assert "Rahul Sharma" in restored
-    assert "1234 5678 9012" in restored
-    assert "ABCDE1234F" in restored
+    assert "9999 9999 0019" in restored
+    assert "ABFPK1234L" in restored
     assert "Khalid Al-Mansoori" in restored
     assert "784-1985-1234567-8" in restored
 

@@ -43,6 +43,21 @@ from dataclasses import dataclass, field
 from typing import Iterable
 
 
+def _unpack_detector(entry: tuple) -> tuple:
+    """Normalise a PATTERNS entry to ``(pattern, entity_type, validator)``.
+
+    Entries may be ``(pattern, entity_type)`` or, where a checksum / structural
+    validator applies, ``(pattern, entity_type, validator)``. The validator is a
+    callable ``str -> bool``; a regex match is tokenised only when it returns
+    ``True`` (e.g. an Aadhaar that passes its Verhoeff check digit). Entries
+    without a validator are always tokenised on a regex match.
+    """
+    if len(entry) == 3:
+        return entry
+    pattern, entity_type = entry
+    return pattern, entity_type, None
+
+
 # ── Jurisdiction → residue-digit-run thresholds ──────────────────────────
 # Map: jurisdiction_slug → list of (min_digits, max_digits, severity, label)
 # Used by scan_residue() to flag digit runs that look like PII shapes
@@ -161,7 +176,8 @@ class PseudonymisationGateway:
         audit_log_path: str | None = None,
         enable_ner: bool = False,
     ) -> None:
-        self.patterns: list[tuple[re.Pattern, str]] = []
+        # Entries are (pattern, entity_type) or (pattern, entity_type, validator).
+        self.patterns: list[tuple] = []
         self._jurisdiction_slugs: list[str] = []
 
         self._load_jurisdictions(jurisdictions)
@@ -220,9 +236,14 @@ class PseudonymisationGateway:
         out = text
 
         # ── Pass 1: Regex ────────────────────────────────────────────
-        for pattern, entity_type in self.patterns:
+        for entry in self.patterns:
+            pattern, entity_type, validator = _unpack_detector(entry)
             matches = list(pattern.finditer(out))
             for m in reversed(matches):
+                # Checksum / structural gate: skip a shaped-but-invalid match
+                # (e.g. a 12-digit invoice number that is not a valid Aadhaar).
+                if validator is not None and not validator(m.group(0)):
+                    continue
                 if entity_type == "PERSON" and m.lastindex:
                     name_part = m.group(1)
                     placeholder = token_map.add(name_part, entity_type)
@@ -271,8 +292,12 @@ class PseudonymisationGateway:
         sensitive leaked past pseudonymisation.
         """
         detected: list[str] = []
-        for pattern, entity_type in self.patterns:
-            if pattern.search(text):
+        for entry in self.patterns:
+            pattern, entity_type, validator = _unpack_detector(entry)
+            if validator is None:
+                if pattern.search(text):
+                    detected.append(entity_type)
+            elif any(validator(m.group(0)) for m in pattern.finditer(text)):
                 detected.append(entity_type)
         return (len(detected) == 0, detected)
 
@@ -368,9 +393,22 @@ class PseudonymisationGateway:
                     self._jurisdiction_slugs.append(slug)
             self.patterns.extend(getattr(mod, "PATTERNS", []))
 
-    def register_pattern(self, pattern: re.Pattern, entity_type: str) -> None:
-        """Insert a custom pattern at the front (highest priority)."""
-        self.patterns.insert(0, (pattern, entity_type))
+    def register_pattern(
+        self,
+        pattern: re.Pattern,
+        entity_type: str,
+        validator=None,
+    ) -> None:
+        """Insert a custom pattern at the front (highest priority).
+
+        Pass ``validator`` (a callable ``str -> bool``) to tokenise a match only
+        when the validator accepts it — e.g. a checksum or structural check that
+        rejects shaped-but-invalid look-alikes.
+        """
+        if validator is None:
+            self.patterns.insert(0, (pattern, entity_type))
+        else:
+            self.patterns.insert(0, (pattern, entity_type, validator))
 
 
 # ── Common legal terms to exclude from residue false-positives ────────────

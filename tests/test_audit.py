@@ -73,7 +73,7 @@ def test_audit_log_never_contains_original_name():
         audit_log_path=tmp.name,
     )
     gw.sanitize(
-        "Rahul Verma with Aadhaar 1234 5678 9012 filed the case.",
+        "Rahul Verma with Aadhaar 9999 9999 0019 filed the case.",
         matter_id="M-TEST",
     )
     with open(tmp.name, "r") as fh:
@@ -81,9 +81,8 @@ def test_audit_log_never_contains_original_name():
     # SECURITY ASSERTION: no original value anywhere in the log
     assert "Rahul" not in raw, "AUDIT LEAK: original name found in log"
     assert "Verma" not in raw, "AUDIT LEAK: original name found in log"
-    assert "1234" not in raw, "AUDIT LEAK: original Aadhaar digits found in log"
-    assert "5678" not in raw, "AUDIT LEAK: original Aadhaar digits found in log"
-    assert "9012" not in raw, "AUDIT LEAK: original Aadhaar digits found in log"
+    assert "9999" not in raw, "AUDIT LEAK: original Aadhaar digits found in log"
+    assert "0019" not in raw, "AUDIT LEAK: original Aadhaar digits found in log"
     Path(tmp.name).unlink()
 
 
@@ -133,12 +132,12 @@ def test_audit_log_never_contains_pan():
         audit_log_path=tmp.name,
     )
     gw.sanitize(
-        "PAN ABCDE1234F verified.",
+        "PAN ABFPK1234L verified.",
         matter_id="M-PAN",
     )
     with open(tmp.name, "r") as fh:
         raw = fh.read()
-    assert "ABCDE1234F" not in raw, "AUDIT LEAK: PAN found in log"
+    assert "ABFPK1234L" not in raw, "AUDIT LEAK: PAN found in log"
     Path(tmp.name).unlink()
 
 
@@ -153,7 +152,7 @@ def test_audit_log_contains_entity_counts_and_types():
         audit_log_path=tmp.name,
     )
     gw.sanitize(
-        "Mr. Rahul Sharma (Aadhaar 1234 5678 9012) and "
+        "Mr. Rahul Sharma (Aadhaar 9999 9999 0019) and "
         "Mr. Khalid Al-Mansoori (Emirates ID 784-1985-1234567-8) filed.",
         matter_id="M-COUNT",
     )
@@ -270,8 +269,8 @@ def test_leak_fuzz_bare_names_and_pii():
         "Rahul Verma filed the petition on behalf of Sunita Rao.",
         "Priyanka Desai submitted evidence against Vikram Reddy.",
         # India PII
-        "Aadhaar 9876 5432 1098 linked to PAN ZZTOP1234K.",
-        "GSTIN 27ABCDE1234F1Z5 and IFSC HDFC0001234 verified.",
+        "Aadhaar 9999 9999 0019 linked to PAN ABFPK1234L.",
+        "GSTIN 27AAPFU0939F1ZV and IFSC HDFC0001234 verified.",
         # UAE PII
         "Emirates ID 784-1990-7654321-0 issued to Khalid Al-Mansoori.",
         # UK PII
@@ -340,7 +339,7 @@ def test_leak_fuzz_bare_names_and_pii():
         # These originals must NEVER appear in the log
         forbidden = [
             "Rahul", "Verma", "Sunita", "Priyanka", "Desai", "Vikram", "Reddy",
-            "9876", "5432", "1098", "ZZTOP1234K",
+            "9999 9999 0019", "ABFPK1234L", "27AAPFU0939F1ZV",
             "784-1990", "Khalid", "Al-Mansoori",
             "AB123456C", "S9876543A", "G1234567B",
             "rahul.verma", "@example.com",

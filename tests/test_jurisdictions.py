@@ -7,20 +7,23 @@ from pseudonymisation_gateway import PseudonymisationGateway
 
 def test_india_aadhaar():
     gw = PseudonymisationGateway(jurisdictions=["india"])
-    clean, _ = gw.sanitize("Aadhaar 1234 5678 9012 belongs to the client.")
+    # 9999 9999 0019 is a UIDAI-published, Verhoeff-valid sample Aadhaar.
+    clean, _ = gw.sanitize("Aadhaar 9999 9999 0019 belongs to the client.")
     assert "[AADHAAR_1]" in clean
-    assert "1234 5678 9012" not in clean
+    assert "9999 9999 0019" not in clean
 
 
 def test_india_pan():
     gw = PseudonymisationGateway(jurisdictions=["india"])
-    clean, _ = gw.sanitize("PAN ABCDE1234F is on file.")
+    # ABFPK1234L: 4th letter 'P' (individual) — a structurally valid PAN.
+    clean, _ = gw.sanitize("PAN ABFPK1234L is on file.")
     assert "[PAN_1]" in clean
 
 
 def test_india_gstin():
     gw = PseudonymisationGateway(jurisdictions=["india"])
-    clean, _ = gw.sanitize("GSTIN 27ABCDE1234F1Z5 verified.")
+    # 27AAPFU0939F1ZV is a checksum-valid GSTIN (state 27, check digit 'V').
+    clean, _ = gw.sanitize("GSTIN 27AAPFU0939F1ZV verified.")
     assert "[GSTIN_1]" in clean
 
 
