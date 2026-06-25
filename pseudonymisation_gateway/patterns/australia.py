@@ -32,9 +32,9 @@ AU_PHONE_RE = re.compile(
     r"(?:\+61[\s-]?|0)(?:4\d{2}|[23478])[\s-]?\d{3,4}[\s-]?\d{3,4}\b"
 )
 
-# AUD amounts — A$ or AUD
+# AUD amounts — A$ or AUD, incl. negative and accounting forms (-A$500, (A$500))
 AUD_AMOUNT_RE = re.compile(
-    r"(?:A\$|AUD?)\s?\d{1,3}(?:,\d{3})*(?:\.\d+)?\b",
+    r"\(?-?\s?(?:A\$|AUD?)\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?",
     re.IGNORECASE,
 )
 

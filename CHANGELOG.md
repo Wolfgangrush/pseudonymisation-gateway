@@ -1,5 +1,48 @@
 # Changelog
 
+## [0.5.0] — 2026-06-26 · Multi-country detector precision
+
+Extends the v0.4 India detector-precision work to the other six jurisdictions.
+Same principle: checksum/structure-verify the *auto-redaction* detector to remove
+false positives, while the residue scanner keeps recall (look-alike runs are still
+surfaced for human review). Validators only reject values that are *definitely not*
+the identifier, so no real PII is newly missed.
+
+### Added — shared checksum validators (`patterns/_checksums.py`)
+
+- `iban_validate` — ISO 13616 mod-97. Wired into **UAE**, **UK**, and **EU** IBAN
+  patterns, which previously matched any country-prefixed alphanumeric run.
+- `nric_validate` — Singapore NRIC/FIN weighted check letter (S/T and F/G tables;
+  +4 offset for T/G). The newer M-series is accepted on structure (its scheme is
+  not pinned) to avoid false negatives.
+- `itin_validate` — US ITIN group-number range (70-88, 90-92, 94-99).
+
+### Fixed — per country
+
+- **UAE / UK / EU:** IBAN now mod-97 validated. (Emirates ID left as-is: the `784`
+  prefix is already a strong structural floor, not the "any-N-digits" bug.)
+- **Singapore:** NRIC `[ST]\d{7}[A-Z]` and FIN `[FGM]\d{7}[A-Z]` now validate the
+  final check letter instead of accepting any letter.
+- **USA:** ITIN now validates the group-number range.
+- **All six currencies** (AED · AUD · GBP · USD · EUR · SGD): now capture negative
+  and accounting forms — `-£5,000`, `(€5.000)`, `-US$5,000`, `(A$5,000)`, etc.
+
+### Deliberately unchanged (privacy-safe calls)
+
+- **Keyword-gated** identifiers (TFN:, ABN:, Medicare:, NHS:, UTR:, CPF:, EIN:,
+  Steuer-ID:, INSEE:, UEN:): the keyword already establishes intent. Adding a
+  strict checksum there could suppress a mistyped-but-clearly-intended value — a
+  false negative (leak). Left as-is by design.
+- **EU per-country VAT checksums** (27 different algorithms) and Italian CF check
+  character: not implemented; the existing structural patterns are retained.
+
+### Changed
+
+- `__version__` bumped `0.4.0 → 0.5.0`.
+- Singapore/USA test fixtures updated to checksum-valid samples
+  (`S1234567D`, `F1234567N`, ITIN `912-70-5678`); added
+  `tests/test_multi_country_validation.py`. 139 tests passing.
+
 ## [0.4.0] — 2026-06-26 · India detector precision
 
 Fixes five reported deficiencies in the India PII detectors. Detection of valid

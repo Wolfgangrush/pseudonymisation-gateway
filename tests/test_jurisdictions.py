@@ -122,7 +122,8 @@ def test_usa_ssn():
 
 def test_usa_itin():
     gw = PseudonymisationGateway(jurisdictions=["usa"])
-    clean, _ = gw.sanitize("ITIN 912-34-5678 on file.")
+    # 912-70-5678: group number 70 is in the IRS-assigned ITIN range.
+    clean, _ = gw.sanitize("ITIN 912-70-5678 on file.")
     assert "[ITIN_1]" in clean
 
 
@@ -162,13 +163,15 @@ def test_eu_cjeu_case():
 
 def test_singapore_nric():
     gw = PseudonymisationGateway(jurisdictions=["singapore"])
-    clean, _ = gw.sanitize("Client S1234567A attended.")
+    # S1234567D: 'D' is the correct weighted check letter for S1234567.
+    clean, _ = gw.sanitize("Client S1234567D attended.")
     assert "[NRIC_1]" in clean
 
 
 def test_singapore_fin():
     gw = PseudonymisationGateway(jurisdictions=["singapore"])
-    clean, _ = gw.sanitize("Worker F1234567B on contract.")
+    # F1234567N: 'N' is the correct weighted check letter for F1234567.
+    clean, _ = gw.sanitize("Worker F1234567N on contract.")
     assert "[FIN_1]" in clean
 
 

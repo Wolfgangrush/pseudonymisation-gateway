@@ -13,6 +13,8 @@ from __future__ import annotations
 
 import re
 
+from ._checksums import iban_validate
+
 # EU member-state country prefix group (used in IBAN + VAT + EORI patterns)
 EU_COUNTRY_PREFIX = (
     "AT|BE|BG|CY|CZ|DE|DK|EE|ES|FI|FR|GR|HR|HU|IE|IT|LT|LU|LV|MT|NL|PL|PT|RO|SE|SI|SK"
@@ -53,14 +55,14 @@ ITALIAN_CF_RE = re.compile(
 # CJEU case numbers — C-XXX/YY (court) or T-XXX/YY (general court)
 CJEU_CASE_RE = re.compile(r"\b(?:C|T)-\d{1,4}/\d{2}\b")
 
-# EUR amounts — €
+# EUR amounts — € (European grouping), incl. negative and accounting forms
 EUR_AMOUNT_RE = re.compile(
-    r"€\s?\d{1,3}(?:[.,]\d{3})*(?:[.,]\d+)?\b"
+    r"\(?-?\s?€\s?-?\d{1,3}(?:[.,]\d{3})*(?:[.,]\d+)?\)?"
 )
 
 
 PATTERNS: list[tuple[re.Pattern, str]] = [
-    (EU_IBAN_RE, "EU_IBAN"),
+    (EU_IBAN_RE, "EU_IBAN", iban_validate),
     (EU_VAT_RE, "EU_VAT"),
     (EU_EORI_RE, "EU_EORI"),
     (GERMAN_TAX_ID_RE, "DE_TAX_ID"),

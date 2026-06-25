@@ -280,7 +280,7 @@ def test_leak_fuzz_bare_names_and_pii():
         # Australia PII
         "TFN 987 654 321 and Medicare 2123 45678 0.",
         # Singapore PII
-        "NRIC S9876543A and FIN G1234567B checked.",
+        "NRIC S9876543C and FIN G1234567X checked.",
         # EU PII
         "German Steuer-ID 98765432101 and IBAN DE89370400440532013000.",
         # Cross-cutting: emails, dates, phone
@@ -341,7 +341,7 @@ def test_leak_fuzz_bare_names_and_pii():
             "Rahul", "Verma", "Sunita", "Priyanka", "Desai", "Vikram", "Reddy",
             "9999 9999 0019", "ABFPK1234L", "27AAPFU0939F1ZV",
             "784-1990", "Khalid", "Al-Mansoori",
-            "AB123456C", "S9876543A", "G1234567B",
+            "AB123456C", "S9876543C", "G1234567X",
             "rahul.verma", "@example.com",
             "98765432101",
         ]

@@ -23,5 +23,5 @@ See https://github.com/Wolfgangrush/pseudonymisation-gateway for documentation.
 
 from .core import PseudonymisationGateway, TokenMap, ResidueReport
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 __all__ = ["PseudonymisationGateway", "TokenMap", "ResidueReport", "__version__"]
