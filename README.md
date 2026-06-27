@@ -1,3 +1,18 @@
+<div align="center">
+  <img src="docs/banner.png" width="820"/>
+  <p><strong>Jurisdiction-aware PII pseudonymisation middleware for legal-tech tools using cloud LLMs.</strong></p>
+  <p>Visit the live site: <a href="https://wolfgangrush.github.io">wolfgangrush.github.io</a></p>
+</div>
+
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Wolfgangrush/pseudonymisation-gateway/pulls)
+[![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red.svg)](https://github.com/Wolfgangrush/pseudonymisation-gateway)
+
+</div>
+
+
 # 🛡️ pseudonymisation-gateway
 
 > **Jurisdiction-aware PII pseudonymisation middleware for legal-tech tools using cloud LLMs.**
