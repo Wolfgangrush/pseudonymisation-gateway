@@ -18,7 +18,7 @@ EMIRATES_ID_RE = re.compile(r"\b784[-\s]?\d{4}[-\s]?\d{7}[-\s]?\d\b")
 
 # UAE IBAN — AE + 2 check digits + 19 digits (23 chars total).
 # mod-97 validated (kills random AE-prefixed digit runs).
-UAE_IBAN_RE = re.compile(r"\bAE\d{21}\b")
+UAE_IBAN_RE = re.compile(r"\bAE\d{2}(?:\s?\d){19}\b")
 
 # UAE Trade License — Dubai Economy / DIFC / Free Zones
 TRADE_LICENSE_RE = re.compile(

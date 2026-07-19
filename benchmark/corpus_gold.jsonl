@@ -1,0 +1,128 @@
+{"id": 0, "text": "905718624683", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 1, "text": "9057 1862 4683", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 2, "text": "9057-1862-4683", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 3, "text": "203492885740", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 4, "text": "2034 9288 5740", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 5, "text": "2034-9288-5740", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 6, "text": "707691303603", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 7, "text": "7076 9130 3603", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 8, "text": "7076-9130-3603", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 9, "text": "932112173049", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 10, "text": "9321 1217 3049", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 11, "text": "9321-1217-3049", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 12, "text": "356281644843", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 13, "text": "3562 8164 4843", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 14, "text": "3562-8164-4843", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 15, "text": "544423165328", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 16, "text": "5444 2316 5328", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 17, "text": "5444-2316-5328", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 18, "text": "443651863186", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 19, "text": "4436 5186 3186", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 20, "text": "4436-5186-3186", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 21, "text": "705769153625", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 22, "text": "7057 6915 3625", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 23, "text": "7057-6915-3625", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 24, "text": "866912478181", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 25, "text": "8669 1247 8181", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 26, "text": "8669-1247-8181", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 27, "text": "315159047221", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 28, "text": "3151 5904 7221", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 29, "text": "3151-5904-7221", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 30, "text": "955751404291", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 31, "text": "9557 5140 4291", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 32, "text": "9557-5140-4291", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 33, "text": "786495890054", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "plain", "note": "12-digit, Verhoeff-valid"}
+{"id": 34, "text": "7864 9589 0054", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "spaced-4-4-4", "note": ""}
+{"id": 35, "text": "7864-9589-0054", "type": "AADHAAR", "expect_detect": true, "klass": "valid", "variant": "dash-4-4-4", "note": "real variant; gateway AADHAAR_RE omits dashes — expected RECALL miss"}
+{"id": 36, "text": "100000000000", "type": "AADHAAR", "expect_detect": false, "klass": "lookalike", "variant": "leading-1", "note": "first digit 1 — UIDAI never issues"}
+{"id": 37, "text": "847362910000", "type": "AADHAAR", "expect_detect": false, "klass": "lookalike", "variant": "bad-verhoeff", "note": "valid shape, wrong check digit"}
+{"id": 38, "text": "Invoice 2024062800031", "type": "AADHAAR", "expect_detect": false, "klass": "lookalike", "variant": "invoice-13d", "note": "13-digit invoice, not Aadhaar"}
+{"id": 39, "text": "UPI Ref 234567890124", "type": "AADHAAR", "expect_detect": false, "klass": "lookalike", "variant": "upi-ref", "note": "12-digit UPI ref, bad checksum"}
+{"id": 40, "text": "NWWAW5952J", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 41, "text": "LFSBO9951H", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 42, "text": "ZONAD7566Q", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 43, "text": "OGWBH8720B", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 44, "text": "APZJN7627M", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 45, "text": "PQPTM8391K", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 46, "text": "XMWTI3989Q", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 47, "text": "KYGLM9384P", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 48, "text": "WENAZ8335R", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 49, "text": "KGXHG1897E", "type": "PAN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "format-valid PAN (no checksum)"}
+{"id": 50, "text": "ABDXE1234F", "type": "PAN", "expect_detect": false, "klass": "lookalike", "variant": "bad-holder", "note": "4th char D not in holder set"}
+{"id": 51, "text": "ABCDE12345", "type": "PAN", "expect_detect": false, "klass": "lookalike", "variant": "all-digit-tail", "note": "ends in digit, not letter"}
+{"id": 52, "text": "abcpe1234f", "type": "PAN", "expect_detect": false, "klass": "lookalike", "variant": "lowercase", "note": "lowercase — gateway PAN_RE is [A-Z] only"}
+{"id": 53, "text": "30IUVGD5638S3Z5", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 54, "text": "36MUWBO0513K8ZI", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 55, "text": "06DJEHT6999A7Z1", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 56, "text": "33CNLJZ6688L4Z1", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 57, "text": "07DIIHZ8090L4ZL", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 58, "text": "12GELTY7848H1ZH", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 59, "text": "17RFOAB5394O8ZY", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 60, "text": "14HHOFY4512U9ZI", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 61, "text": "34LBSBF2154Y1Z9", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 62, "text": "29KTZJL1784S4Z5", "type": "GSTIN", "expect_detect": true, "klass": "valid", "variant": "upper", "note": "state+PAN+entity+Z+checksum"}
+{"id": 63, "text": "27ABCDE1234F1Z5", "type": "GSTIN", "expect_detect": false, "klass": "lookalike", "variant": "bad-checksum", "note": "classic shaped-but-invalid GSTIN"}
+{"id": 64, "text": "40ABCPE1234F1ZN", "type": "GSTIN", "expect_detect": false, "klass": "lookalike", "variant": "bad-state", "note": "state 40 not in 01-38/97/99 (even with a 'valid' check char)"}
+{"id": 65, "text": "GB50RTMI44800669126384", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-plain", "note": "mod-97 valid"}
+{"id": 66, "text": "GB50 RTMI 4480 0669 1263 84", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-spaced", "note": "grouped-4 real-world print form"}
+{"id": 67, "text": "GB81PZBY22561209613682", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-plain", "note": "mod-97 valid"}
+{"id": 68, "text": "GB81 PZBY 2256 1209 6136 82", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-spaced", "note": "grouped-4 real-world print form"}
+{"id": 69, "text": "GB12JCIE38292617316120", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-plain", "note": "mod-97 valid"}
+{"id": 70, "text": "GB12 JCIE 3829 2617 3161 20", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-spaced", "note": "grouped-4 real-world print form"}
+{"id": 71, "text": "GB33TMUO06812565826919", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-plain", "note": "mod-97 valid"}
+{"id": 72, "text": "GB33 TMUO 0681 2565 8269 19", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "GB-spaced", "note": "grouped-4 real-world print form"}
+{"id": 73, "text": "AE471765243241144412089", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-plain", "note": "mod-97 valid"}
+{"id": 74, "text": "AE47 1765 2432 4114 4412 089", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 75, "text": "AE567670418980894917934", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-plain", "note": "mod-97 valid"}
+{"id": 76, "text": "AE56 7670 4189 8089 4917 934", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 77, "text": "AE266302761656226941108", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-plain", "note": "mod-97 valid"}
+{"id": 78, "text": "AE26 6302 7616 5622 6941 108", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 79, "text": "AE640804462122464632320", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-plain", "note": "mod-97 valid"}
+{"id": 80, "text": "AE64 0804 4621 2246 4632 320", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "AE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 81, "text": "DE27086347695457703453", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-plain", "note": "mod-97 valid"}
+{"id": 82, "text": "DE27 0863 4769 5457 7034 53", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 83, "text": "DE89948648118936937161", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-plain", "note": "mod-97 valid"}
+{"id": 84, "text": "DE89 9486 4811 8936 9371 61", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 85, "text": "DE54970070870008976635", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-plain", "note": "mod-97 valid"}
+{"id": 86, "text": "DE54 9700 7087 0008 9766 35", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 87, "text": "DE87439289903701874481", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-plain", "note": "mod-97 valid"}
+{"id": 88, "text": "DE87 4392 8990 3701 8744 81", "type": "IBAN", "expect_detect": true, "klass": "valid", "variant": "DE-spaced", "note": "grouped-4 real-world print form"}
+{"id": 89, "text": "GB00BARC20031820000000", "type": "IBAN", "expect_detect": false, "klass": "lookalike", "variant": "bad-mod97", "note": "GB-shaped, check digits don't reconcile"}
+{"id": 90, "text": "S6380729Z", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "S-series", "note": "weighted check-letter valid"}
+{"id": 91, "text": "S5073556G", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "S-series", "note": "weighted check-letter valid"}
+{"id": 92, "text": "S0145274F", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "S-series", "note": "weighted check-letter valid"}
+{"id": 93, "text": "T1861572F", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "T-series", "note": "weighted check-letter valid"}
+{"id": 94, "text": "T8428782I", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "T-series", "note": "weighted check-letter valid"}
+{"id": 95, "text": "T4919337D", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "T-series", "note": "weighted check-letter valid"}
+{"id": 96, "text": "F3878458R", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "F-series", "note": "weighted check-letter valid"}
+{"id": 97, "text": "F1587161W", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "F-series", "note": "weighted check-letter valid"}
+{"id": 98, "text": "F0264475N", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "F-series", "note": "weighted check-letter valid"}
+{"id": 99, "text": "G8405758X", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "G-series", "note": "weighted check-letter valid"}
+{"id": 100, "text": "G1720198R", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "G-series", "note": "weighted check-letter valid"}
+{"id": 101, "text": "G7152544P", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "G-series", "note": "weighted check-letter valid"}
+{"id": 102, "text": "M1234567K", "type": "NRIC", "expect_detect": true, "klass": "valid", "variant": "M-series", "note": "M accepted on structure (gateway stance)"}
+{"id": 103, "text": "S1234567A", "type": "NRIC", "expect_detect": false, "klass": "lookalike", "variant": "bad-check", "note": "S-series, wrong check letter"}
+{"id": 104, "text": "941-87-9033", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 105, "text": "922-92-9452", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 106, "text": "985-92-5898", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 107, "text": "984-84-7522", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 108, "text": "986-70-4322", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 109, "text": "918-73-8056", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 110, "text": "954-92-4552", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 111, "text": "961-75-9745", "type": "ITIN", "expect_detect": true, "klass": "valid", "variant": "dashed", "note": "group in IRS range"}
+{"id": 112, "text": "912-89-0000", "type": "ITIN", "expect_detect": false, "klass": "lookalike", "variant": "bad-group", "note": "group 89 outside assigned ranges"}
+{"id": 113, "text": "812-70-0000", "type": "ITIN", "expect_detect": false, "klass": "lookalike", "variant": "no-leading-9", "note": "does not start with 9"}
+{"id": 114, "text": "₹5,000", "type": "INR_AMOUNT", "expect_detect": true, "klass": "valid", "variant": "plain", "note": ""}
+{"id": 115, "text": "-₹5,000", "type": "INR_AMOUNT", "expect_detect": true, "klass": "valid", "variant": "negative", "note": ""}
+{"id": 116, "text": "₹-5,000", "type": "INR_AMOUNT", "expect_detect": true, "klass": "valid", "variant": "inner-negative", "note": ""}
+{"id": 117, "text": "(₹5,000)", "type": "INR_AMOUNT", "expect_detect": true, "klass": "valid", "variant": "accounting-parens", "note": ""}
+{"id": 118, "text": "Rs. -5,000", "type": "INR_AMOUNT", "expect_detect": true, "klass": "valid", "variant": "rs-negative", "note": ""}
+{"id": 119, "text": "INR 1,23,456.78", "type": "INR_AMOUNT", "expect_detect": true, "klass": "valid", "variant": "indian-grouping", "note": ""}
+{"id": 120, "text": "+91 98765 43210", "type": "INDIA_PHONE", "expect_detect": true, "klass": "valid", "variant": "spaced-91", "note": ""}
+{"id": 121, "text": "9876543210", "type": "INDIA_PHONE", "expect_detect": true, "klass": "valid", "variant": "bare-10", "note": ""}
+{"id": 122, "text": "5876543210", "type": "INDIA_PHONE", "expect_detect": false, "klass": "lookalike", "variant": "leads-5", "note": "Indian mobiles start 6-9"}
+{"id": 123, "text": "HDFC0001234", "type": "IFSC", "expect_detect": true, "klass": "valid", "variant": "std", "note": "4 letters + 0 + 6"}
+{"id": 124, "text": "HDFC1001234", "type": "IFSC", "expect_detect": false, "klass": "lookalike", "variant": "no-zero", "note": "5th char must be 0"}
+{"id": 125, "text": "FIR No. 123/2024", "type": "FIR_NO", "expect_detect": true, "klass": "valid", "variant": "std", "note": ""}
+{"id": 126, "text": "MH-31-AB-1234", "type": "INDIA_VEHICLE", "expect_detect": true, "klass": "valid", "variant": "state-series", "note": ""}
+{"id": 127, "text": "22 BH 1234 AB", "type": "INDIA_VEHICLE", "expect_detect": true, "klass": "valid", "variant": "bh-series", "note": ""}

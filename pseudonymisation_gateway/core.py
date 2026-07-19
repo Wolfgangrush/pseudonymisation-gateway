@@ -342,6 +342,20 @@ class PseudonymisationGateway:
                         if desc not in report.low:
                             report.low.append(desc)
 
+        # ── 1b. Grouped Aadhaar residue (India-only backstop) ────────
+        # A dash/space-grouped 12-digit run that FAILS its checksum
+        # (e.g. a typo) is not surfaced by the contiguous-run rule above.
+        # Catch GROUPED forms only (required separator) so we never
+        # double-count the contiguous-run rule.
+        if "india" in self._jurisdiction_slugs:
+            grouped_aadhaar = re.compile(
+                r"(?<!\])\b[2-9]\d{3}[\s-]\d{4}[\s-]\d{4}\b"
+            )
+            if grouped_aadhaar.search(text):
+                desc = "grouped 12-digit run possibly Aadhaar (india)"
+                if desc not in report.high:
+                    report.high.append(desc)
+
         # ── 2. Capitalised-bigram residue ─────────────────────────────
         # "Capitalised Capitalised" pairs that look like bare names
         # Exclude text inside placeholders like [PERSON_1]

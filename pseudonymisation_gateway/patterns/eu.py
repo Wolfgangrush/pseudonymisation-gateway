@@ -22,7 +22,7 @@ EU_COUNTRY_PREFIX = (
 
 # EU IBAN — country prefix + 2 check digits + 11-30 alphanumeric (varies per member state)
 EU_IBAN_RE = re.compile(
-    rf"\b(?:{EU_COUNTRY_PREFIX})\d{{2}}[A-Z0-9]{{11,30}}\b"
+    rf"\b(?:{EU_COUNTRY_PREFIX})\d{{2}}(?:\s?[A-Z0-9]){{11,30}}\b"
 )
 
 # EU VAT — country prefix + 8-12 alphanumeric

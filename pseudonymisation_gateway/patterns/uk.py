@@ -28,7 +28,7 @@ UTR_RE = re.compile(r"\bUTR[\s:#]*\d{10}\b", re.IGNORECASE)
 UK_VAT_RE = re.compile(r"\bGB\d{9}(?:\d{3})?\b")
 
 # UK IBAN — GB + 2 check + 18 alphanumeric. mod-97 validated.
-UK_IBAN_RE = re.compile(r"\bGB\d{2}[A-Z0-9]{18}\b")
+UK_IBAN_RE = re.compile(r"\bGB\d{2}(?:\s?[A-Z0-9]){18}\b")
 
 # UK phone — +44 prefix or 07/01/02 formats
 UK_PHONE_RE = re.compile(

@@ -119,7 +119,7 @@ def gstin_validate(s: str) -> bool:
 # Aadhaar — 12 digits (optionally 4-4-4 spaced), first digit 2-9.
 # Checksum-validated via aadhaar_validate (kills 12-digit invoice/timestamp/UPI
 # false positives).
-AADHAAR_RE = re.compile(r"\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b")
+AADHAAR_RE = re.compile(r"\b[2-9]\d{3}[\s-]?\d{4}[\s-]?\d{4}\b")
 
 # PAN — 5 letters + 4 digits + 1 letter. The 4th letter is the holder-type code
 # (P individual · C company · H HUF · F firm/LLP · A AOP · T trust · B BOI ·

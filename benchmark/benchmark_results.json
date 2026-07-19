@@ -1,0 +1,273 @@
+{
+  "jurisdictions": [
+    "india",
+    "usa",
+    "eu",
+    "uk",
+    "australia",
+    "singapore",
+    "uae"
+  ],
+  "totals": {
+    "rows": 273,
+    "positives": 226,
+    "negatives": 47
+  },
+  "recall": {
+    "overall": 0.9912,
+    "caught": 224,
+    "total": 226,
+    "by_type": {
+      "AADHAAR": {
+        "caught": 72,
+        "total": 72,
+        "recall": 1.0
+      },
+      "FIR_NO": {
+        "caught": 2,
+        "total": 2,
+        "recall": 1.0
+      },
+      "GSTIN": {
+        "caught": 20,
+        "total": 20,
+        "recall": 1.0
+      },
+      "IBAN": {
+        "caught": 48,
+        "total": 48,
+        "recall": 1.0
+      },
+      "IFSC": {
+        "caught": 2,
+        "total": 2,
+        "recall": 1.0
+      },
+      "INDIA_PHONE": {
+        "caught": 2,
+        "total": 4,
+        "recall": 0.5
+      },
+      "INDIA_VEHICLE": {
+        "caught": 4,
+        "total": 4,
+        "recall": 1.0
+      },
+      "INR_AMOUNT": {
+        "caught": 12,
+        "total": 12,
+        "recall": 1.0
+      },
+      "ITIN": {
+        "caught": 16,
+        "total": 16,
+        "recall": 1.0
+      },
+      "NRIC": {
+        "caught": 26,
+        "total": 26,
+        "recall": 1.0
+      },
+      "PAN": {
+        "caught": 20,
+        "total": 20,
+        "recall": 1.0
+      }
+    }
+  },
+  "precision_on_negatives": {
+    "overall": 0.617,
+    "correctly_ignored": 29,
+    "total": 47
+  },
+  "recall_misses": [
+    {
+      "text": "+91 98765 43210",
+      "type": "INDIA_PHONE",
+      "variant": "spaced-91",
+      "note": "",
+      "residue_high": false
+    },
+    {
+      "text": "Court filing line 12 cites defendant +91 98765 43210 with case reference CR/2023/4567 filed on 2024-01-10",
+      "type": "INDIA_PHONE",
+      "variant": "",
+      "note": "INDIA_PHONE spaced-91 embedded in mini-generated context",
+      "residue_high": false
+    }
+  ],
+  "residue_safety_net_caught": 0,
+  "precision_leaks": [
+    {
+      "text": "123456789012",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "IN29ICIC123456789012",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "987654321098",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "INDIA_PHONE",
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "112233445566",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "IT60X05428111010012345678",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE",
+        "UK_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "445566778899",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE",
+        "UAE_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "334455667788",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "CH56048330210598765432",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE",
+        "SG_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "556677889900",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "INDIA_PHONE",
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "123456789012",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "270012345678901",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE",
+        "UK_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "FR14 2004 1010 0123 4567 8901 90",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "AU_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "987654321098",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "INDIA_PHONE",
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "290098765432109",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "INDIA_PHONE",
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "FR14 2004 1010 0123 4567 8901 90",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "AU_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "270012345678901",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE",
+        "UK_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "123456789012",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "US_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    },
+    {
+      "text": "FR14 2004 1010 0123 4567 8901 90",
+      "type": "LOOKALIKE_MIXED",
+      "variant": "",
+      "detected": [
+        "AU_PHONE"
+      ],
+      "note": "mini decoy; checksum-gated to confirm no validator accepts it"
+    }
+  ]
+}
