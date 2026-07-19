@@ -1,9 +1,9 @@
 """Dictionary tests — bare-name catch via parties.json, jurisdiction-scoped load."""
+
 import json
 import tempfile
 from pathlib import Path
 
-import pytest
 
 from pseudonymisation_gateway.dictionary import PartiesDictionary
 
@@ -20,9 +20,12 @@ def _write_json(data: dict) -> str:
 
 # ── Flat (unscoped) dictionary ────────────────────────────────────────────
 
+
 def test_flat_dictionary_bare_name():
     """Bare name (no honorific) is caught by parties.json dictionary."""
-    path = _write_json({"PERSON": ["Rahul Verma", "Sunita Rao"], "ORG": ["Acme Foods Pvt Ltd"]})
+    path = _write_json(
+        {"PERSON": ["Rahul Verma", "Sunita Rao"], "ORG": ["Acme Foods Pvt Ltd"]}
+    )
     d = PartiesDictionary(parties_file=path)
     matches = d.match("Rahul Verma filed the petition against Acme Foods Pvt Ltd.")
     assert len(matches) >= 2
@@ -73,11 +76,13 @@ def test_flat_dictionary_longest_match_first():
 
 def test_flat_dictionary_multiple_entity_types():
     """Dictionary respects entity types from JSON."""
-    path = _write_json({
-        "PERSON": ["Rahul Verma"],
-        "ORG": ["Acme Foods Pvt Ltd"],
-        "CASE_REF": ["Matter-4012"],
-    })
+    path = _write_json(
+        {
+            "PERSON": ["Rahul Verma"],
+            "ORG": ["Acme Foods Pvt Ltd"],
+            "CASE_REF": ["Matter-4012"],
+        }
+    )
     d = PartiesDictionary(parties_file=path)
     matches = d.match("Rahul Verma sued Acme Foods Pvt Ltd re Matter-4012.")
     types_found = {m[1] for m in matches}
@@ -89,13 +94,16 @@ def test_flat_dictionary_multiple_entity_types():
 
 # ── Jurisdiction-scoped dictionary ────────────────────────────────────────
 
+
 def test_jurisdiction_scoped_loads_only_active():
     """Only entries for active jurisdictions + '*' are loaded."""
-    path = _write_json({
-        "india": {"PERSON": ["Rahul Verma"], "ORG": ["Acme Foods Pvt Ltd"]},
-        "uk": {"PERSON": ["John Smith"]},
-        "*": {"ORG": ["Cross-border Corp"]},
-    })
+    path = _write_json(
+        {
+            "india": {"PERSON": ["Rahul Verma"], "ORG": ["Acme Foods Pvt Ltd"]},
+            "uk": {"PERSON": ["John Smith"]},
+            "*": {"ORG": ["Cross-border Corp"]},
+        }
+    )
     d = PartiesDictionary(parties_file=path, active_jurisdictions=["india"])
     # India entries loaded
     assert any(e[0] == "Rahul Verma" for e in d.entries)
@@ -109,10 +117,12 @@ def test_jurisdiction_scoped_loads_only_active():
 
 def test_jurisdiction_scoped_match_only_active():
     """Dictionary only matches entries for active jurisdictions."""
-    path = _write_json({
-        "india": {"PERSON": ["Rahul Verma"]},
-        "uk": {"PERSON": ["John Smith"]},
-    })
+    path = _write_json(
+        {
+            "india": {"PERSON": ["Rahul Verma"]},
+            "uk": {"PERSON": ["John Smith"]},
+        }
+    )
     d = PartiesDictionary(parties_file=path, active_jurisdictions=["india"])
     matches = d.match("Rahul Verma and John Smith attended.")
     matched_texts = {m[0].lower() for m in matches}
@@ -123,10 +133,12 @@ def test_jurisdiction_scoped_match_only_active():
 
 def test_jurisdiction_scoped_star_bucket_always_loaded():
     """'*' bucket is loaded regardless of active jurisdictions."""
-    path = _write_json({
-        "uk": {"PERSON": ["John Smith"]},
-        "*": {"PERSON": ["Shared Person"]},
-    })
+    path = _write_json(
+        {
+            "uk": {"PERSON": ["John Smith"]},
+            "*": {"PERSON": ["Shared Person"]},
+        }
+    )
     d = PartiesDictionary(parties_file=path, active_jurisdictions=["india"])
     matches = d.match("Shared Person filed the case.")
     assert len(matches) == 1
@@ -134,6 +146,7 @@ def test_jurisdiction_scoped_star_bucket_always_loaded():
 
 
 # ── Edge cases ────────────────────────────────────────────────────────────
+
 
 def test_empty_dictionary_no_file():
     """PartiesDictionary with no file has no entries."""
@@ -153,14 +166,13 @@ def test_dictionary_no_match():
 
 # ── Integration: dictionary within gateway ─────────────────────────────────
 
+
 def test_gateway_with_dictionary_catches_bare_name():
     """Gateway with parties.json catches names the regex would miss."""
     from pseudonymisation_gateway import PseudonymisationGateway
 
     path = _write_json({"PERSON": ["Rahul Verma", "Sunita Rao"]})
-    gw = PseudonymisationGateway(
-        jurisdictions=["india"], parties_file=path
-    )
+    gw = PseudonymisationGateway(jurisdictions=["india"], parties_file=path)
     # "Rahul Verma" has no honorific — regex NAME_RE won't catch it
     clean, tm = gw.sanitize("Rahul Verma filed the petition against Sunita Rao.")
     assert "Rahul Verma" not in clean
@@ -173,13 +185,13 @@ def test_gateway_with_dictionary_jurisdiction_scoped():
     """Gateway respects jurisdiction scoping in parties.json."""
     from pseudonymisation_gateway import PseudonymisationGateway
 
-    path = _write_json({
-        "india": {"PERSON": ["Rahul Verma"]},
-        "uk": {"PERSON": ["John Smith"]},
-    })
-    gw = PseudonymisationGateway(
-        jurisdictions=["india"], parties_file=path
+    path = _write_json(
+        {
+            "india": {"PERSON": ["Rahul Verma"]},
+            "uk": {"PERSON": ["John Smith"]},
+        }
     )
+    gw = PseudonymisationGateway(jurisdictions=["india"], parties_file=path)
     clean, tm = gw.sanitize("Rahul Verma and John Smith filed jointly.")
     # India entry caught
     assert "Rahul Verma" not in clean
@@ -195,9 +207,7 @@ def test_gateway_dictionary_preserves_existing_regex_catches():
     from pseudonymisation_gateway import PseudonymisationGateway
 
     path = _write_json({"PERSON": ["Rahul"]})
-    gw = PseudonymisationGateway(
-        jurisdictions=["india"], parties_file=path
-    )
+    gw = PseudonymisationGateway(jurisdictions=["india"], parties_file=path)
     # "Mr. Rahul Sharma" — regex catches "Rahul Sharma" via honorific
     # Dictionary also has "Rahul" — should NOT double-tokenise
     clean, tm = gw.sanitize("Mr. Rahul Sharma filed.")
@@ -206,5 +216,6 @@ def test_gateway_dictionary_preserves_existing_regex_catches():
     assert "Rahul" not in clean or "[PERSON_" in clean
     # Verify no double-bracketed patterns
     import re
+
     assert not re.search(r"\[PERSON_\d+\].*\[PERSON_\d+\]", clean)
     Path(path).unlink()

@@ -1,9 +1,9 @@
 """Audit log tests — asserts NO original value appears in the log; counts/types/timestamp present."""
+
 import json
 import tempfile
 from pathlib import Path
 
-import pytest
 
 from pseudonymisation_gateway import PseudonymisationGateway
 from pseudonymisation_gateway.audit import AuditLogger
@@ -11,6 +11,7 @@ from pseudonymisation_gateway.core import ResidueReport
 
 
 # ── AuditLogger basics ────────────────────────────────────────────────────
+
 
 def test_audit_logger_no_path_is_noop():
     """AuditLogger with path=None does nothing."""
@@ -54,8 +55,12 @@ def test_audit_logger_appends():
     tmp = tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False)
     tmp.close()
     logger = AuditLogger(path=tmp.name)
-    logger.log(matter_id="A", jurisdiction=["india"], entity_count=1, entity_types=["PERSON"])
-    logger.log(matter_id="B", jurisdiction=["uk"], entity_count=2, entity_types=["NI_NUMBER"])
+    logger.log(
+        matter_id="A", jurisdiction=["india"], entity_count=1, entity_types=["PERSON"]
+    )
+    logger.log(
+        matter_id="B", jurisdiction=["uk"], entity_count=2, entity_types=["NI_NUMBER"]
+    )
     with open(tmp.name, "r") as fh:
         lines = fh.readlines()
     assert len(lines) == 2
@@ -63,6 +68,7 @@ def test_audit_logger_appends():
 
 
 # ── SECURITY-CRITICAL: no original values in audit log ─────────────────────
+
 
 def test_audit_log_never_contains_original_name():
     """The audit log MUST NOT contain any original name value."""
@@ -143,6 +149,7 @@ def test_audit_log_never_contains_pan():
 
 # ── Audit log: counts and types present ───────────────────────────────────
 
+
 def test_audit_log_contains_entity_counts_and_types():
     """Audit log has entity_count and entity_types (but never values)."""
     tmp = tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False)
@@ -203,6 +210,7 @@ def test_audit_log_residue_counts_only():
 
 # ── Audit log: timestamp present ──────────────────────────────────────────
 
+
 def test_audit_log_timestamp_present():
     """Every audit entry has a timestamp."""
     tmp = tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False)
@@ -240,6 +248,7 @@ def test_audit_log_custom_timestamp():
 
 # ── Audit log: no path = no file written ──────────────────────────────────
 
+
 def test_audit_log_no_path_no_file():
     """When audit_log_path is None, no file is created."""
     gw = PseudonymisationGateway(
@@ -253,6 +262,7 @@ def test_audit_log_no_path_no_file():
 
 
 # ── LEAK-FUZZ: comprehensive zero-value-in-log assertion ───────────────────
+
 
 def test_leak_fuzz_bare_names_and_pii():
     """Feed bare names + multi-jurisdiction PII through full pipeline.
@@ -292,7 +302,13 @@ def test_leak_fuzz_bare_names_and_pii():
         # Create a fresh gateway per test (isolated TokenMap)
         gw = PseudonymisationGateway(
             jurisdictions=[
-                "india", "uae", "uk", "usa", "australia", "singapore", "eu",
+                "india",
+                "uae",
+                "uk",
+                "usa",
+                "australia",
+                "singapore",
+                "eu",
             ],
         )
         clean, tm = gw.sanitize(test_text)
@@ -316,7 +332,13 @@ def test_leak_fuzz_bare_names_and_pii():
         audit_tmp.close()
         gw2 = PseudonymisationGateway(
             jurisdictions=[
-                "india", "uae", "uk", "usa", "australia", "singapore", "eu",
+                "india",
+                "uae",
+                "uk",
+                "usa",
+                "australia",
+                "singapore",
+                "eu",
             ],
             audit_log_path=audit_tmp.name,
         )
@@ -338,11 +360,24 @@ def test_leak_fuzz_bare_names_and_pii():
         log_str = _json.dumps(entry)
         # These originals must NEVER appear in the log
         forbidden = [
-            "Rahul", "Verma", "Sunita", "Priyanka", "Desai", "Vikram", "Reddy",
-            "9999 9999 0019", "ABFPK1234L", "27AAPFU0939F1ZV",
-            "784-1990", "Khalid", "Al-Mansoori",
-            "AB123456C", "S9876543C", "G1234567X",
-            "rahul.verma", "@example.com",
+            "Rahul",
+            "Verma",
+            "Sunita",
+            "Priyanka",
+            "Desai",
+            "Vikram",
+            "Reddy",
+            "9999 9999 0019",
+            "ABFPK1234L",
+            "27AAPFU0939F1ZV",
+            "784-1990",
+            "Khalid",
+            "Al-Mansoori",
+            "AB123456C",
+            "S9876543C",
+            "G1234567X",
+            "rahul.verma",
+            "@example.com",
             "98765432101",
         ]
         for token in forbidden:

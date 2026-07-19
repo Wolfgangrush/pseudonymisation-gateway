@@ -21,6 +21,7 @@ import re
 # ── IBAN (ISO 13616) — mod-97 check ──────────────────────────────────────
 # Used by UAE (AE), UK (GB), and EU member-state IBANs.
 
+
 def iban_validate(s: str) -> bool:
     """True iff ``s`` is a structurally valid IBAN (ISO 7064 mod-97-10).
 
@@ -36,17 +37,15 @@ def iban_validate(s: str) -> bool:
         return False
     # Move the four initial characters to the end, then map letters A=10..Z=35.
     rearranged = iban[4:] + iban[:4]
-    digits = "".join(
-        str(int(ch, 36)) if ch.isalpha() else ch for ch in rearranged
-    )
+    digits = "".join(str(int(ch, 36)) if ch.isalpha() else ch for ch in rearranged)
     return int(digits) % 97 == 1
 
 
 # ── Singapore NRIC / FIN — weighted check letter ─────────────────────────
 
 _NRIC_WEIGHTS = (2, 7, 6, 5, 4, 3, 2)
-_NRIC_ST_LETTERS = "JZIHGFEDCBA"   # S / T citizens & PRs
-_NRIC_FG_LETTERS = "XWUTRQPNMLK"   # F / G foreigners
+_NRIC_ST_LETTERS = "JZIHGFEDCBA"  # S / T citizens & PRs
+_NRIC_FG_LETTERS = "XWUTRQPNMLK"  # F / G foreigners
 
 
 def nric_validate(s: str) -> bool:
@@ -75,6 +74,7 @@ def nric_validate(s: str) -> bool:
 
 
 # ── USA ITIN — group-number range ────────────────────────────────────────
+
 
 def itin_validate(s: str) -> bool:
     """Validate a US ITIN: starts with 9, with a group number (4th-5th digits)

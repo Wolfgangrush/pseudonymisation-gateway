@@ -8,6 +8,7 @@ Run with:
     export ANTHROPIC_API_KEY=sk-ant-...
     python claude_api_integration.py
 """
+
 import os
 
 # Note: this example uses Anthropic's SDK. Adapt to your client of choice.

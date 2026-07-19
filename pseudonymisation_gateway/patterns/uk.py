@@ -11,9 +11,7 @@ import re
 from ._checksums import iban_validate
 
 # NI Number — 2 letters + 6 digits + 1 letter (e.g. AB123456C). Strict per HMRC spec.
-NI_NUMBER_RE = re.compile(
-    r"\b[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}\d{6}[A-D]{1}\b"
-)
+NI_NUMBER_RE = re.compile(r"\b[A-CEGHJ-PR-TW-Z]{1}[A-CEGHJ-NPR-TW-Z]{1}\d{6}[A-D]{1}\b")
 
 # NHS Number — 10 digits in 3-3-4 format, keyword-prefixed
 NHS_NUMBER_RE = re.compile(
@@ -36,9 +34,7 @@ UK_PHONE_RE = re.compile(
 )
 
 # GBP amounts — £, incl. negative and accounting forms (-£500, (£500))
-GBP_AMOUNT_RE = re.compile(
-    r"\(?-?\s?£\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?"
-)
+GBP_AMOUNT_RE = re.compile(r"\(?-?\s?£\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?")
 
 # UK case numbers — [YYYY] EWHC/EWCA/UKSC + division
 UK_CASE_RE = re.compile(

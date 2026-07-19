@@ -129,9 +129,7 @@ PAN_RE = re.compile(r"\b[A-Z]{3}[ABCFGHJLPT][A-Z]\d{4}[A-Z]\b")
 
 # GSTIN — 2-digit state code + PAN (10) + entity code (1) + 'Z' + checksum (1).
 # Checksum-validated via gstin_validate.
-GSTIN_RE = re.compile(
-    r"\b\d{2}[A-Z]{3}[ABCFGHJLPT][A-Z]\d{4}[A-Z][0-9A-Z]Z[0-9A-Z]\b"
-)
+GSTIN_RE = re.compile(r"\b\d{2}[A-Z]{3}[ABCFGHJLPT][A-Z]\d{4}[A-Z][0-9A-Z]Z[0-9A-Z]\b")
 
 # Indian phone — +91 prefix optional, 10 digits starting 6-9
 INDIA_PHONE_RE = re.compile(r"(?:\+91[\s-]?)?[6-9]\d{9}\b")
@@ -156,16 +154,12 @@ FIR_RE = re.compile(r"\bFIR\s+No\.?\s*\d+/\d{2,4}\b", re.IGNORECASE)
 IFSC_RE = re.compile(r"\b[A-Z]{4}0[A-Z\d]{6}\b")
 
 # Indian vehicle registration (state series) — SS-NN-XX-NNNN
-INDIA_VEHICLE_RE = re.compile(
-    r"\b[A-Z]{2}[\s-]?\d{1,2}[\s-]?[A-Z]{1,2}[\s-]?\d{4}\b"
-)
+INDIA_VEHICLE_RE = re.compile(r"\b[A-Z]{2}[\s-]?\d{1,2}[\s-]?[A-Z]{1,2}[\s-]?\d{4}\b")
 
 # Bharat (BH) series — YY BH NNNN XX (e.g. "22 BH 1234 AB"). The plate leads
 # with the 2-digit registration year, so the state-series pattern above can
 # never match it.
-INDIA_BH_VEHICLE_RE = re.compile(
-    r"\b\d{2}[\s-]?BH[\s-]?\d{4}[\s-]?[A-Z]{1,2}\b"
-)
+INDIA_BH_VEHICLE_RE = re.compile(r"\b\d{2}[\s-]?BH[\s-]?\d{4}[\s-]?[A-Z]{1,2}\b")
 
 
 # PATTERNS entries are ``(pattern, entity_type)`` or, where a checksum /

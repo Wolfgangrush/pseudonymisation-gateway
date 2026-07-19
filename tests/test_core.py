@@ -1,6 +1,6 @@
 """Core engine tests — TokenMap, sanitize/desanitize round-trip, register_pattern."""
+
 import re
-import pytest
 from pseudonymisation_gateway import PseudonymisationGateway, TokenMap
 
 

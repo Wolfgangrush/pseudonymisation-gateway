@@ -15,6 +15,7 @@ Wikipedia IBANs) — never a real identifier. Run it against any detector change
 
     pytest tests/test_detector_benchmark.py -q
 """
+
 import pytest
 
 from pseudonymisation_gateway import PseudonymisationGateway
@@ -25,51 +26,51 @@ BENCHMARK = [
     (
         "india",
         [
-            "Aadhaar 9999 9999 0019",      # UIDAI test Aadhaar (Verhoeff-valid)
-            "PAN ABFPK1234L",              # 4th char 'P' (individual)
-            "GSTIN 27AAPFU0939F1ZV",       # state 27, check digit 'V'
-            "Vehicle 22 BH 1234 AB",       # Bharat (BH) series
-            "Vehicle MH 12 AB 1234",       # state series
-            "Owed -₹5,000",                # negative amount
-            "Loss of (₹5,000)",            # accounting amount
+            "Aadhaar 9999 9999 0019",  # UIDAI test Aadhaar (Verhoeff-valid)
+            "PAN ABFPK1234L",  # 4th char 'P' (individual)
+            "GSTIN 27AAPFU0939F1ZV",  # state 27, check digit 'V'
+            "Vehicle 22 BH 1234 AB",  # Bharat (BH) series
+            "Vehicle MH 12 AB 1234",  # state series
+            "Owed -₹5,000",  # negative amount
+            "Loss of (₹5,000)",  # accounting amount
         ],
         [
-            "Invoice 1234 5678 9012",      # 12-digit, starts 1 (not Aadhaar)
-            "Timestamp 202606260112",      # 12-digit, fails Verhoeff
-            "Barcode 890123456784",        # 12-digit, fails Verhoeff
-            "String 27ABCDE1234F1Z5",      # GSTIN-shaped, bad checksum + bad PAN
-            "Ref ABCDE1234F here",         # PAN-shaped, 4th char 'D' invalid
+            "Invoice 1234 5678 9012",  # 12-digit, starts 1 (not Aadhaar)
+            "Timestamp 202606260112",  # 12-digit, fails Verhoeff
+            "Barcode 890123456784",  # 12-digit, fails Verhoeff
+            "String 27ABCDE1234F1Z5",  # GSTIN-shaped, bad checksum + bad PAN
+            "Ref ABCDE1234F here",  # PAN-shaped, 4th char 'D' invalid
         ],
     ),
     (
         "uae",
         ["Transfer AE070331234567890123456", "Loss (AED 5,000)", "-AED 5,000"],
-        ["String AE070331234567890123450"],   # tampered IBAN check
+        ["String AE070331234567890123450"],  # tampered IBAN check
     ),
     (
         "uk",
         ["IBAN GB82WEST12345698765432", "Owed -£5,000", "Loss (£5,000)"],
-        ["String GB28NWBK60161331926819"],     # tampered IBAN check
+        ["String GB28NWBK60161331926819"],  # tampered IBAN check
     ),
     (
         "eu",
         ["Wire DE89370400440532013000", "Loss (€5.000)", "-€5.000"],
-        ["String DE89370400440532013001"],     # tampered IBAN check
+        ["String DE89370400440532013001"],  # tampered IBAN check
     ),
     (
         "singapore",
         ["NRIC S1234567D", "FIN F1234567N", "Fee -S$5,000", "Loss (S$5,000)"],
-        ["Ref S1234567A here"],                 # wrong NRIC check letter
+        ["Ref S1234567A here"],  # wrong NRIC check letter
     ),
     (
         "usa",
         ["ITIN 912-70-5678", "SSN 123-45-6789", "Refund (USD 5,000)", "-US$5,000"],
-        ["Number 912-34-5678 here"],            # ITIN group out of range
+        ["Number 912-34-5678 here"],  # ITIN group out of range
     ),
     (
         "australia",
         ["Loss (A$5,000)", "-A$5,000"],
-        [],                                     # AU IDs are keyword-gated by design
+        [],  # AU IDs are keyword-gated by design
     ),
 ]
 

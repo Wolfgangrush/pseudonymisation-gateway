@@ -7,7 +7,7 @@ Australia (~1M), UK (~1.9M), USA (~5.4M), EU (~2M), Singapore (~9.2% pop).
 A Dubai lawyer handling an Indian-expat client matter benefits from both
 Emirates ID AND Aadhaar detection in the same gateway.
 """
-import pytest
+
 from pseudonymisation_gateway import PseudonymisationGateway
 
 

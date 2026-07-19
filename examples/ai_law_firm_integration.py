@@ -14,6 +14,7 @@ gateway:
 
 This file shows the full pattern across all 7 country firms.
 """
+
 from pseudonymisation_gateway import PseudonymisationGateway
 
 

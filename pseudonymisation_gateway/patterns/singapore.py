@@ -24,14 +24,10 @@ UEN_RE = re.compile(r"\bUEN[\s:#]*\d{8,10}[A-Z]\b", re.IGNORECASE)
 CPF_RE = re.compile(r"\bCPF[\s:#]*\d{4}[\s-]?\d{4}\b", re.IGNORECASE)
 
 # Singapore phone — +65 prefix or 8/9-digit format
-SG_PHONE_RE = re.compile(
-    r"(?:\+?65[\s-]?)?[89]\d{3}[\s-]?\d{4}\b"
-)
+SG_PHONE_RE = re.compile(r"(?:\+?65[\s-]?)?[89]\d{3}[\s-]?\d{4}\b")
 
 # SGD amounts — S$, incl. negative and accounting forms (-S$500, (S$500))
-SGD_AMOUNT_RE = re.compile(
-    r"\(?-?\s?S\$\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?"
-)
+SGD_AMOUNT_RE = re.compile(r"\(?-?\s?S\$\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?")
 
 # Singapore case numbers — [YYYY] SGCA/SGHC/SGDC/SGMC/SGFC/SICC NNN
 SG_CASE_RE = re.compile(

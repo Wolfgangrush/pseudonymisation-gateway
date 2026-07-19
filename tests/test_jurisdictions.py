@@ -1,9 +1,10 @@
 """Per-jurisdiction pattern tests."""
-import pytest
+
 from pseudonymisation_gateway import PseudonymisationGateway
 
 
 # ─── India ─────────────────────────────────────────────────────────────
+
 
 def test_india_aadhaar():
     gw = PseudonymisationGateway(jurisdictions=["india"])
@@ -35,6 +36,7 @@ def test_india_ifsc():
 
 # ─── UAE ───────────────────────────────────────────────────────────────
 
+
 def test_uae_emirates_id():
     gw = PseudonymisationGateway(jurisdictions=["uae"])
     clean, _ = gw.sanitize("Emirates ID 784-1985-1234567-8 attached.")
@@ -62,6 +64,7 @@ def test_uae_difc_case():
 
 # ─── Australia ─────────────────────────────────────────────────────────
 
+
 def test_australia_tfn():
     gw = PseudonymisationGateway(jurisdictions=["australia"])
     clean, _ = gw.sanitize("TFN: 123 456 789 attached.")
@@ -88,6 +91,7 @@ def test_australia_hca_case():
 
 # ─── UK ─────────────────────────────────────────────────────────────────
 
+
 def test_uk_ni_number():
     gw = PseudonymisationGateway(jurisdictions=["uk"])
     clean, _ = gw.sanitize("Client AB123456C lives here.")
@@ -113,6 +117,7 @@ def test_uk_ewhc_case():
 
 
 # ─── USA ────────────────────────────────────────────────────────────────
+
 
 def test_usa_ssn():
     gw = PseudonymisationGateway(jurisdictions=["usa"])
@@ -141,6 +146,7 @@ def test_usa_federal_docket():
 
 # ─── EU ────────────────────────────────────────────────────────────────
 
+
 def test_eu_iban_germany():
     gw = PseudonymisationGateway(jurisdictions=["eu"])
     clean, _ = gw.sanitize("Wire to DE89370400440532013000.")
@@ -160,6 +166,7 @@ def test_eu_cjeu_case():
 
 
 # ─── Singapore ─────────────────────────────────────────────────────────
+
 
 def test_singapore_nric():
     gw = PseudonymisationGateway(jurisdictions=["singapore"])

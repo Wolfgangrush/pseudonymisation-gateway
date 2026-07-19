@@ -90,6 +90,7 @@ _JURISDICTION_DIGIT_RUNS: dict[str, list[tuple[int, int, str, str]]] = {
 
 # ── ResidueReport ────────────────────────────────────────────────────────
 
+
 @dataclass
 class ResidueReport:
     """Post-sanitisation residue scan result.
@@ -112,6 +113,7 @@ class ResidueReport:
 
 # ── TokenMap ─────────────────────────────────────────────────────────────
 
+
 @dataclass
 class TokenMap:
     """Session-scoped placeholder ↔ original mapping. Never persisted."""
@@ -133,6 +135,7 @@ class TokenMap:
 
 
 # ── PseudonymisationGateway ──────────────────────────────────────────────
+
 
 class PseudonymisationGateway:
     """Strips PII from text before cloud-API send; restores on return.
@@ -348,9 +351,7 @@ class PseudonymisationGateway:
         # Catch GROUPED forms only (required separator) so we never
         # double-count the contiguous-run rule.
         if "india" in self._jurisdiction_slugs:
-            grouped_aadhaar = re.compile(
-                r"(?<!\])\b[2-9]\d{3}[\s-]\d{4}[\s-]\d{4}\b"
-            )
+            grouped_aadhaar = re.compile(r"(?<!\])\b[2-9]\d{3}[\s-]\d{4}[\s-]\d{4}\b")
             if grouped_aadhaar.search(text):
                 desc = "grouped 12-digit run possibly Aadhaar (india)"
                 if desc not in report.high:
@@ -361,9 +362,7 @@ class PseudonymisationGateway:
         # Exclude text inside placeholders like [PERSON_1]
         # Strategy: strip all [...] placeholders, then scan remainder
         stripped = re.sub(r"\[[A-Z_]+_\d+\]", " ", text)
-        bigram_pattern = re.compile(
-            r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+){1,2})\b"
-        )
+        bigram_pattern = re.compile(r"\b([A-Z][a-z]+(?:\s[A-Z][a-z]+){1,2})\b")
         for m in bigram_pattern.finditer(stripped):
             candidate = m.group(1)
             # Skip single-word matches (cap-only), honorifics, and known
@@ -395,9 +394,7 @@ class PseudonymisationGateway:
 
         for j in jurisdictions:
             if isinstance(j, str):
-                mod = importlib.import_module(
-                    f"pseudonymisation_gateway.patterns.{j}"
-                )
+                mod = importlib.import_module(f"pseudonymisation_gateway.patterns.{j}")
                 self._jurisdiction_slugs.append(j)
             else:
                 mod = j
@@ -429,22 +426,76 @@ class PseudonymisationGateway:
 
 _LEGAL_COMMON_TERMS: set[str] = {
     # Months
-    "january", "february", "march", "april", "may", "june",
-    "july", "august", "september", "october", "november", "december",
+    "january",
+    "february",
+    "march",
+    "april",
+    "may",
+    "june",
+    "july",
+    "august",
+    "september",
+    "october",
+    "november",
+    "december",
     # Courts / legal
-    "court", "supreme", "appeal", "petition", "application",
-    "plaintiff", "defendant", "appellant", "respondent",
-    "tribunal", "commission", "authority", "government",
-    "section", "article", "clause", "schedule", "annexure",
-    "affidavit", "submission", "judgment", "order", "decree",
-    "honourable", "honorable", "learned", "respective",
-    "counsel", "advocate", "solicitor", "barrister",
+    "court",
+    "supreme",
+    "appeal",
+    "petition",
+    "application",
+    "plaintiff",
+    "defendant",
+    "appellant",
+    "respondent",
+    "tribunal",
+    "commission",
+    "authority",
+    "government",
+    "section",
+    "article",
+    "clause",
+    "schedule",
+    "annexure",
+    "affidavit",
+    "submission",
+    "judgment",
+    "order",
+    "decree",
+    "honourable",
+    "honorable",
+    "learned",
+    "respective",
+    "counsel",
+    "advocate",
+    "solicitor",
+    "barrister",
     # Jurisdiction names
-    "india", "dubai", "london", "singapore", "australia",
-    "united", "states", "kingdom", "emirates",
+    "india",
+    "dubai",
+    "london",
+    "singapore",
+    "australia",
+    "united",
+    "states",
+    "kingdom",
+    "emirates",
     # Generic
-    "matter", "filing", "document", "exhibit", "witness",
-    "statement", "evidence", "hearing", "notice",
-    "pursuant", "hereinafter", "herein", "thereof", "whereas",
-    "notwithstanding", "forthwith", "heretofore",
+    "matter",
+    "filing",
+    "document",
+    "exhibit",
+    "witness",
+    "statement",
+    "evidence",
+    "hearing",
+    "notice",
+    "pursuant",
+    "hereinafter",
+    "herein",
+    "thereof",
+    "whereas",
+    "notwithstanding",
+    "forthwith",
+    "heretofore",
 }

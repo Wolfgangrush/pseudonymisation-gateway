@@ -25,9 +25,7 @@ ITIN_RE = re.compile(r"\b9\d{2}-\d{2}-\d{4}\b")
 EIN_RE = re.compile(r"\bEIN[\s:#]*\d{2}-\d{7}\b", re.IGNORECASE)
 
 # US phone — +1 prefix or 10-digit format with various separators
-US_PHONE_RE = re.compile(
-    r"(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b"
-)
+US_PHONE_RE = re.compile(r"(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b")
 
 # USD amounts — US$ or USD (avoid raw $ which conflicts with AUD/SGD/etc.),
 # incl. negative and accounting forms (-US$500, (USD 500))

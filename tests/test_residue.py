@@ -1,11 +1,11 @@
 """Residue scan tests — HIGH residue surfaces; LOW logs + proceeds; jurisdiction shapes respected."""
-import pytest
 
 from pseudonymisation_gateway import PseudonymisationGateway
 from pseudonymisation_gateway.core import ResidueReport
 
 
 # ── Basic residue scan structure ──────────────────────────────────────────
+
 
 def test_residue_report_defaults():
     """ResidueReport has sensible defaults."""
@@ -22,6 +22,7 @@ def test_residue_report_with_jurisdiction():
 
 
 # ── Residue scan: digit runs by jurisdiction ──────────────────────────────
+
 
 def test_residue_india_12_digit_high():
     """12-digit run in India context → HIGH residue."""
@@ -80,6 +81,7 @@ def test_residue_singapore_digit_run_high():
 
 # ── Residue scan: capitalised bigrams ─────────────────────────────────────
 
+
 def test_residue_capitalised_bigram_high():
     """Capitalised bigram not in TokenMap → HIGH residue."""
     gw = PseudonymisationGateway(jurisdictions=["india"])
@@ -99,6 +101,7 @@ def test_residue_capitalised_bigram_in_placeholder_not_flagged():
 
 
 # ── Residue scan: weak signals ────────────────────────────────────────────
+
 
 def test_residue_lone_capitalised_low():
     """Lone capitalised word (not a common term) → LOW residue."""
@@ -127,6 +130,7 @@ def test_residue_jurisdiction_list_present():
 
 # ── Residue scan: clean text ──────────────────────────────────────────────
 
+
 def test_residue_clean_text_empty():
     """Fully sanitised text produces minimal residue."""
     gw = PseudonymisationGateway(jurisdictions=["india"])
@@ -137,6 +141,7 @@ def test_residue_clean_text_empty():
 
 
 # ── Residue scan: jurisdiction-isolated ───────────────────────────────────
+
 
 def test_residue_india_pattern_not_high_in_uk():
     """12-digit run is HIGH in India but not necessarily in UK (no 12-digit ID)."""

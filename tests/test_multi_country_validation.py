@@ -11,6 +11,7 @@ Same privacy stance as India: validators add precision to the auto-redaction
 detector; they do not weaken recall (the residue scanner still surfaces look-alike
 digit runs for human review).
 """
+
 import pytest
 
 from pseudonymisation_gateway import PseudonymisationGateway
@@ -22,6 +23,7 @@ from pseudonymisation_gateway.patterns._checksums import (
 
 
 # ── IBAN (mod-97) across UAE / UK / EU ────────────────────────────────────
+
 
 @pytest.mark.parametrize(
     "jurisdiction,label,iban",
@@ -40,9 +42,9 @@ def test_valid_iban_redacted(jurisdiction, label, iban):
 @pytest.mark.parametrize(
     "jurisdiction,iban",
     [
-        ("uae", "AE070331234567890123450"),   # tampered check digit
-        ("uk", "GB00WEST12345698765432"),      # wrong check digits
-        ("eu", "DE89370400440532013001"),      # tampered last digit
+        ("uae", "AE070331234567890123450"),  # tampered check digit
+        ("uk", "GB00WEST12345698765432"),  # wrong check digits
+        ("eu", "DE89370400440532013001"),  # tampered last digit
     ],
 )
 def test_invalid_iban_not_redacted(jurisdiction, iban):
@@ -59,6 +61,7 @@ def test_iban_validate_unit():
 
 
 # ── Singapore NRIC / FIN (weighted check letter) ──────────────────────────
+
 
 def test_valid_nric_fin_redacted():
     gw = PseudonymisationGateway(jurisdictions=["singapore"])
@@ -87,6 +90,7 @@ def test_nric_validate_unit():
 
 # ── USA ITIN (group-number range) ─────────────────────────────────────────
 
+
 def test_valid_itin_redacted():
     gw = PseudonymisationGateway(jurisdictions=["usa"])
     clean, _ = gw.sanitize("ITIN 912-70-5678 on file.")
@@ -104,11 +108,12 @@ def test_itin_validate_unit():
     assert itin_validate("912-70-5678") is True
     assert itin_validate("900-88-0000") is True
     assert itin_validate("999-99-9999") is True
-    assert itin_validate("912-34-5678") is False   # group 34 invalid
-    assert itin_validate("812-70-5678") is False    # does not start with 9
+    assert itin_validate("912-34-5678") is False  # group 34 invalid
+    assert itin_validate("812-70-5678") is False  # does not start with 9
 
 
 # ── Currency amounts — negative + accounting forms across all 6 ───────────
+
 
 @pytest.mark.parametrize(
     "jurisdiction,label,amount",

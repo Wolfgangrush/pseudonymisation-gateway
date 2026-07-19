@@ -13,32 +13,50 @@ own so the model's ~16% hallucination can never corrupt the corpus:
 
 Output: corpus_context.jsonl
 """
+
 from __future__ import annotations
-import json, os, re, random, urllib.request
+import json
+import os
+import re
+import random
+import urllib.request
 
 random.seed(20260628)
 HERE = os.path.dirname(os.path.abspath(__file__))
 GW = os.path.abspath(os.path.join(HERE, ".."))
-import sys; sys.path.insert(0, GW)
+import sys
+
+sys.path.insert(0, GW)
 from pseudonymisation_gateway.patterns.india import aadhaar_validate, gstin_validate
-from pseudonymisation_gateway.patterns._checksums import iban_validate, nric_validate, itin_validate
+from pseudonymisation_gateway.patterns._checksums import (
+    iban_validate,
+    nric_validate,
+    itin_validate,
+)
 
 MINI = os.environ.get("MINI_ENDPOINT", "http://localhost:1346/v1/chat/completions")
 MODEL = "ornith-1.0-9b"
 
+
 def ornith(prompt, max_tokens=1400, retries=3):
     """Call ornith with the </think> prefill fix; assert finish_reason==stop."""
-    body = json.dumps({
-        "model": MODEL,
-        "messages": [{"role": "user", "content": prompt},
-                     {"role": "assistant", "content": "</think>\n\n"}],
-        "max_tokens": max_tokens, "temperature": 0.4,
-    }).encode()
+    body = json.dumps(
+        {
+            "model": MODEL,
+            "messages": [
+                {"role": "user", "content": prompt},
+                {"role": "assistant", "content": "</think>\n\n"},
+            ],
+            "max_tokens": max_tokens,
+            "temperature": 0.4,
+        }
+    ).encode()
     last = None
     for a in range(retries):
         try:
-            req = urllib.request.Request(MINI, data=body,
-                                         headers={"Content-Type": "application/json"})
+            req = urllib.request.Request(
+                MINI, data=body, headers={"Content-Type": "application/json"}
+            )
             with urllib.request.urlopen(req, timeout=180) as r:
                 d = json.load(r)
             c = d["choices"][0]
@@ -48,6 +66,7 @@ def ornith(prompt, max_tokens=1400, retries=3):
         except Exception as e:
             last = e
     raise RuntimeError(f"ornith failed: {last}")
+
 
 def extract_json_array(txt):
     """Pull the first JSON array of strings out of a model reply."""
@@ -59,6 +78,7 @@ def extract_json_array(txt):
         return [x for x in arr if isinstance(x, str)]
     except Exception:
         return re.findall(r'"([^"]{3,200})"', m.group())
+
 
 # ── 1. realistic context templates ────────────────────────────────────────
 TEMPLATE_PROMPT = (
@@ -78,26 +98,46 @@ for i in range(3):  # bounded reduce, not a while-loop
         out = ornith(TEMPLATE_PROMPT.replace("{n}", "22"))
         got = [t for t in extract_json_array(out) if "{{PII}}" in t]
         templates.extend(got)
-        print(f"[templates] call {i+1}: +{len(got)} (total {len(templates)})")
+        print(f"[templates] call {i + 1}: +{len(got)} (total {len(templates)})")
     except Exception as e:
-        print(f"[templates] call {i+1} failed: {e}")
-seen = set(); templates = [t for t in templates if not (t in seen or seen.add(t))]
+        print(f"[templates] call {i + 1} failed: {e}")
+seen = set()
+templates = [t for t in templates if not (t in seen or seen.add(t))]
 print(f"[templates] usable: {len(templates)}")
 
-gold = [json.loads(l) for l in open(os.path.join(HERE, "corpus_gold.jsonl"), encoding="utf-8")]
+gold = [
+    json.loads(l)
+    for l in open(os.path.join(HERE, "corpus_gold.jsonl"), encoding="utf-8")
+]
 valids = [g for g in gold if g["klass"] == "valid"]
 
 ROWS = []
+
+
 def add(text, typ, expect, klass, note):
-    ROWS.append({"id": len(ROWS), "text": text, "type": typ,
-                 "expect_detect": expect, "klass": klass,
-                 "source": "mini+gold", "note": note})
+    ROWS.append(
+        {
+            "id": len(ROWS),
+            "text": text,
+            "type": typ,
+            "expect_detect": expect,
+            "klass": klass,
+            "source": "mini+gold",
+            "note": note,
+        }
+    )
+
 
 if templates:
     for g in valids:
         tmpl = random.choice(templates)
-        add(tmpl.replace("{{PII}}", g["text"]), g["type"], True, "valid-in-context",
-            f"{g['type']} {g['variant']} embedded in mini-generated context")
+        add(
+            tmpl.replace("{{PII}}", g["text"]),
+            g["type"],
+            True,
+            "valid-in-context",
+            f"{g['type']} {g['variant']} embedded in mini-generated context",
+        )
 
 # ── 2. adversarial look-alikes, checksum-gated ─────────────────────────────
 ADV_PROMPT = (
@@ -108,16 +148,22 @@ ADV_PROMPT = (
     "character, an IBAN-shaped run whose check digits don't reconcile. These are "
     "decoys a good detector must IGNORE. Return ONLY a JSON array of strings."
 )
+
+
 def any_validator_accepts(s):
     cand = s.strip()
     digits = re.sub(r"\D", "", cand)
     checks = [
-        aadhaar_validate(cand), gstin_validate(cand), iban_validate(cand),
-        nric_validate(cand), itin_validate(cand),
+        aadhaar_validate(cand),
+        gstin_validate(cand),
+        iban_validate(cand),
+        nric_validate(cand),
+        itin_validate(cand),
     ]
     if len(digits) == 12:
         checks.append(aadhaar_validate(digits))
     return any(checks)
+
 
 adv_kept = 0
 for i in range(2):
@@ -126,17 +172,22 @@ for i in range(2):
         for s in extract_json_array(out):
             s = s.strip()
             if 6 <= len(s) <= 40 and not any_validator_accepts(s):
-                add(s, "LOOKALIKE_MIXED", False, "lookalike-mini",
-                    "mini decoy; checksum-gated to confirm no validator accepts it")
+                add(
+                    s,
+                    "LOOKALIKE_MIXED",
+                    False,
+                    "lookalike-mini",
+                    "mini decoy; checksum-gated to confirm no validator accepts it",
+                )
                 adv_kept += 1
-        print(f"[adversarial] call {i+1}: kept {adv_kept} so far")
+        print(f"[adversarial] call {i + 1}: kept {adv_kept} so far")
     except Exception as e:
-        print(f"[adversarial] call {i+1} failed: {e}")
+        print(f"[adversarial] call {i + 1} failed: {e}")
 
 OUT = os.path.join(HERE, "corpus_context.jsonl")
 with open(OUT, "w", encoding="utf-8") as f:
     for r in ROWS:
         f.write(json.dumps(r, ensure_ascii=False) + "\n")
 print(f"wrote {len(ROWS)} context rows -> {OUT}")
-print(f"  valid-in-context: {sum(1 for r in ROWS if r['klass']=='valid-in-context')}")
-print(f"  mini lookalikes : {sum(1 for r in ROWS if r['klass']=='lookalike-mini')}")
+print(f"  valid-in-context: {sum(1 for r in ROWS if r['klass'] == 'valid-in-context')}")
+print(f"  mini lookalikes : {sum(1 for r in ROWS if r['klass'] == 'lookalike-mini')}")

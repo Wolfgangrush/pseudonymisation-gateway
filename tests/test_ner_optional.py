@@ -1,11 +1,11 @@
 """NER-optional tests — spaCy absent → warning, pipeline still runs; release gate passes WITHOUT spaCy."""
-import pytest
 
 from pseudonymisation_gateway.ner import NERSanitiser
 from pseudonymisation_gateway import PseudonymisationGateway
 
 
 # ── NER unavailable (spaCy not installed) ─────────────────────────────────
+
 
 def test_ner_sanitiser_available_false_without_spacy():
     """When spaCy is not installed, NERSanitiser.available is False."""
@@ -21,6 +21,7 @@ def test_ner_extract_entities_empty_without_spacy():
 
 
 # ── Gateway with enable_ner=True (spaCy absent) ───────────────────────────
+
 
 def test_gateway_enable_ner_no_spacy_does_not_block():
     """Gateway with enable_ner=True still works when spaCy is absent."""
@@ -47,6 +48,7 @@ def test_gateway_enable_ner_no_spacy_sanitize_still_works():
 
 
 # ── Pipeline runs WITHOUT spaCy (release-gate test) ────────────────────────
+
 
 def test_full_pipeline_without_spacy():
     """Full sanitize → desanitize round-trip works without spaCy."""

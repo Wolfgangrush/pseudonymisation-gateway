@@ -21,19 +21,13 @@ EU_COUNTRY_PREFIX = (
 )
 
 # EU IBAN — country prefix + 2 check digits + 11-30 alphanumeric (varies per member state)
-EU_IBAN_RE = re.compile(
-    rf"\b(?:{EU_COUNTRY_PREFIX})\d{{2}}(?:\s?[A-Z0-9]){{11,30}}\b"
-)
+EU_IBAN_RE = re.compile(rf"\b(?:{EU_COUNTRY_PREFIX})\d{{2}}(?:\s?[A-Z0-9]){{11,30}}\b")
 
 # EU VAT — country prefix + 8-12 alphanumeric
-EU_VAT_RE = re.compile(
-    rf"\b(?:{EU_COUNTRY_PREFIX})[\sU]?[A-Z0-9]{{8,12}}\b"
-)
+EU_VAT_RE = re.compile(rf"\b(?:{EU_COUNTRY_PREFIX})[\sU]?[A-Z0-9]{{8,12}}\b")
 
 # EU EORI (Economic Operator) — country prefix + 15 alphanumeric
-EU_EORI_RE = re.compile(
-    rf"\b(?:{EU_COUNTRY_PREFIX})\d{{15}}\b"
-)
+EU_EORI_RE = re.compile(rf"\b(?:{EU_COUNTRY_PREFIX})\d{{15}}\b")
 
 # German Steuer-ID — 11 digits, keyword-prefixed (Steuer-ID or Steueridentifikationsnummer)
 GERMAN_TAX_ID_RE = re.compile(
@@ -48,17 +42,13 @@ FRENCH_INSEE_RE = re.compile(
 )
 
 # Italian Codice Fiscale — 6 letters + 2 digits + 1 letter + 2 digits + 1 letter + 3 digits + 1 letter
-ITALIAN_CF_RE = re.compile(
-    r"\b[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]\b"
-)
+ITALIAN_CF_RE = re.compile(r"\b[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]\b")
 
 # CJEU case numbers — C-XXX/YY (court) or T-XXX/YY (general court)
 CJEU_CASE_RE = re.compile(r"\b(?:C|T)-\d{1,4}/\d{2}\b")
 
 # EUR amounts — € (European grouping), incl. negative and accounting forms
-EUR_AMOUNT_RE = re.compile(
-    r"\(?-?\s?€\s?-?\d{1,3}(?:[.,]\d{3})*(?:[.,]\d+)?\)?"
-)
+EUR_AMOUNT_RE = re.compile(r"\(?-?\s?€\s?-?\d{1,3}(?:[.,]\d{3})*(?:[.,]\d+)?\)?")
 
 
 PATTERNS: list[tuple[re.Pattern, str]] = [
